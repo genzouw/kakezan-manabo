@@ -145,9 +145,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateChoices() {
     const correctAnswer = currentQuestion.answer;
     const choices = [correctAnswer];
+    const allAnswers = [];
+
+    for (const key in multiplicationData) {
+      if (multiplicationData.hasOwnProperty(key)) {
+        const answer = multiplicationData[key].answer;
+        if (answer !== correctAnswer) {
+          allAnswers.push(answer);
+        }
+      }
+    }
 
     while (choices.length < 4) {
-      let randomChoice = Math.floor(Math.random() * 81) + 1;
+      const randomIndex = Math.floor(Math.random() * allAnswers.length);
+      const randomChoice = allAnswers[randomIndex];
       if (!choices.includes(randomChoice)) {
         choices.push(randomChoice);
       }
