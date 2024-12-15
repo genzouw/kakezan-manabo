@@ -106,10 +106,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return null;
     }
 
-    const num1 =
-      selectedLevels[Math.floor(Math.random() * selectedLevels.length)];
-    const num2 = Math.floor(Math.random() * 9) + 1;
-    const questionKey = `${num1}x${num2}`;
+    let questionKey;
+    let num1, num2;
+
+    do {
+      num1 = selectedLevels[Math.floor(Math.random() * selectedLevels.length)];
+      num2 = Math.floor(Math.random() * 9) + 1;
+      questionKey = `${num1}x${num2}`;
+    } while (gameHistory.some((history) => history.question === questionKey));
+
     return {
       question: questionKey.replace("x", " × ") + " = ",
       answer: multiplicationData[questionKey].answer,
@@ -117,11 +122,16 @@ document.addEventListener("DOMContentLoaded", function () {
       num2: num2,
       reading: multiplicationData[questionKey].reading,
       answerReading: multiplicationData[questionKey].answerReading,
+      questionKey: questionKey,
     };
   }
 
   function displayQuestion() {
     currentQuestion = generateMultiplicationQuestion();
+    if (currentQuestion === null) {
+      return;
+    }
+    gameHistory.push({ question: currentQuestion.questionKey });
     questionDiv.textContent = currentQuestion.question;
     speakQuestion(currentQuestion.reading);
     generateChoices();
@@ -236,12 +246,13 @@ document.addEventListener("DOMContentLoaded", function () {
       correctAnswers: correctAnswers,
       totalQuestions: totalQuestions,
       date: new Date().toLocaleString(),
+      questions: gameHistory.map((history) => history.question),
     };
 
     gameHistory.push(gameResult);
     localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
     displayHistory();
-    questionDiv.textContent = `ゲーム終了！正解数: ${correctAnswers} / ${totalQuestions}`;
+    questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
     startButton.style.display = "inline-block";
   }
@@ -254,7 +265,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayHistory() {
-    gameHistory.forEach((result) => {
+    // 一度領域をすべてクリアする
+    historyDiv.innerHTML = "";
+    const filteredHistory = gameHistory
+      .filter((result) => result.date !== undefined)
+      .sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+    filteredHistory.forEach((result) => {
+      console.log(result.date);
       const historyItem = document.createElement("p");
       historyItem.textContent = `${result.date} 正解数: ${result.correctAnswers}/${result.totalQuestions}`;
       historyDiv.appendChild(historyItem);
