@@ -277,7 +277,16 @@ document.addEventListener("DOMContentLoaded", function () {
     filteredHistory.forEach((result) => {
       console.log(result.date);
       const historyItem = document.createElement("p");
-      historyItem.textContent = `${result.date} 正解数: ${result.correctAnswers}/${result.totalQuestions} ${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}`;
+      const formattedDate = new Date(result.date)
+        .toLocaleString("ja-JP", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        .replace(/\//g, "-");
+      historyItem.textContent = `${formattedDate} 正解数: ${result.correctAnswers}/${result.totalQuestions} ${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}`;
       historyDiv.appendChild(historyItem);
     });
   }
