@@ -28,11 +28,14 @@ h3 {
 }
 
 .choice-btn {
-  padding: 10px 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 2.4em;
   cursor: pointer;
   display: none;
   min-width: 2em;
+  text-align: center;
+  border-radius: 0.5em;
 }
 
 #start-btn {
