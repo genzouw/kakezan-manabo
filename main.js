@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     filteredHistory.forEach((result) => {
       console.log(result.date);
       const historyItem = document.createElement("p");
-      historyItem.textContent = `${result.date} 正解数: ${result.correctAnswers}/${result.totalQuestions} ${result.correctAnswers === result.totalQuestions ? "🎉" : ""}`;
+      historyItem.textContent = `${result.date} 正解数: ${result.correctAnswers}/${result.totalQuestions} ${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}`;
       historyDiv.appendChild(historyItem);
     });
   }
