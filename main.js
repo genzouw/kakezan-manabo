@@ -142,14 +142,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function speakQuestion(questionReading) {
-    console.log(questionReading);
-    const utterance = new SpeechSynthesisUtterance();
-    utterance.text = questionReading;
-    utterance.voice = speechSynthesis.getVoices().filter(function (n) {
-      return n.name == "Google 日本語";
-    })[0];
-    utterance.lang = "ja-JP";
-    speechSynthesis.speak(utterance);
+    return new Promise((resolve) => {
+      const utterance = new SpeechSynthesisUtterance();
+      utterance.text = questionReading;
+      utterance.voice = speechSynthesis.getVoices().filter(function (n) {
+        return n.name == "Google 日本語";
+      })[0];
+      utterance.lang = "ja-JP";
+      utterance.onend = resolve;
+      speechSynthesis.speak(utterance);
+    });
   }
 
   function generateChoices() {
@@ -213,14 +215,14 @@ document.addEventListener("DOMContentLoaded", function () {
       speakAnswer(currentQuestion.answerReading);
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       currentQuestionIndex++;
       updateScore();
       choiceButtons.forEach((button) => {
         button.disabled = false;
       });
       if (currentQuestionIndex < totalQuestions) {
-        displayQuestion();
+        await displayQuestion();
       } else {
         endGame();
       }
