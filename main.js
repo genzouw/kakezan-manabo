@@ -29,7 +29,7 @@ const multiplicationData = {
   "3x9": { reading: "さんく", answer: 27, answerReading: "にじゅうしち" },
   "4x1": { reading: "しいちが", answer: 4, answerReading: "し" },
   "4x2": { reading: "しにが", answer: 8, answerReading: "はち" },
-  "4x3": { reading: "しさんが", answer: 12, answerReading: "じゅうに" },
+  "4x3": { reading: "しさん", answer: 12, answerReading: "じゅうに" },
   "4x4": { reading: "しし", answer: 16, answerReading: "じゅうろく" },
   "4x5": { reading: "しご", answer: 20, answerReading: "にじゅう" },
   "4x6": { reading: "しろく", answer: 24, answerReading: "にじゅうし" },
