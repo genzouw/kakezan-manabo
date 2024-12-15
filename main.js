@@ -21,7 +21,7 @@ const multiplicationData = {
   "3x1": { reading: "さんいちが", answer: 3, answerReading: "さん" },
   "3x2": { reading: "さんにが", answer: 6, answerReading: "ろく" },
   "3x3": { reading: "さざんが", answer: 9, answerReading: "く" },
-  "3x4": { reading: "さんしが", answer: 12, answerReading: "じゅうに" },
+  "3x4": { reading: "さんし", answer: 12, answerReading: "じゅうに" },
   "3x5": { reading: "さんご", answer: 15, answerReading: "じゅうご" },
   "3x6": { reading: "さぶろく", answer: 18, answerReading: "じゅうはち" },
   "3x7": { reading: "さんしち", answer: 21, answerReading: "にじゅういち" },
