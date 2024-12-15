@@ -274,21 +274,59 @@ document.addEventListener("DOMContentLoaded", function () {
       .sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
+
+    if (filteredHistory.length === 0) {
+      historyDiv.textContent = "まだ履歴はありません。";
+      return;
+    }
+
+    const table = document.createElement("table");
+    table.classList.add("history-table");
+    const headerRow = document.createElement("tr");
+    // TODO: 問題の範囲を表示する
+    // const headers = ["日付", "正解数", "問題数", "問題の範囲"];
+    const headers = ["日付", "正解数", "問題数"];
+    headers.forEach((headerText) => {
+      const header = document.createElement("th");
+      header.textContent = headerText;
+      headerRow.appendChild(header);
+    });
+    table.appendChild(headerRow);
+
     filteredHistory.forEach((result) => {
-      console.log(result.date);
-      const historyItem = document.createElement("p");
+      const row = document.createElement("tr");
+
       const formattedDate = new Date(result.date)
         .toLocaleString("ja-JP", {
-          year: "numeric",
           month: "2-digit",
           day: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
         })
-        .replace(/\//g, "-");
-      historyItem.textContent = `${formattedDate} 正解数: ${result.correctAnswers}/${result.totalQuestions} ${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}`;
-      historyDiv.appendChild(historyItem);
+        .replace(/\//g, "/");
+      const dateCell = document.createElement("td");
+      dateCell.textContent = formattedDate;
+      row.appendChild(dateCell);
+
+      row.appendChild(dateCell);
+
+      const correctAnswersCell = document.createElement("td");
+      correctAnswersCell.textContent = `${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}${result.correctAnswers}`;
+      row.appendChild(correctAnswersCell);
+
+      const totalQuestionsCell = document.createElement("td");
+      totalQuestionsCell.textContent = result.totalQuestions;
+      row.appendChild(totalQuestionsCell);
+
+      // TODO: 問題の範囲を表示する
+      // const questionsCell = document.createElement("td");
+      // questionsCell.textContent = "";
+      // row.appendChild(questionsCell);
+
+      table.appendChild(row);
     });
+
+    historyDiv.appendChild(table);
   }
 
   startButton.addEventListener("click", function () {
