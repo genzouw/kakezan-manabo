@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>掛け算学習アプリ</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="question"></div>
+    <div id="choices">
+      <button class="choice-btn"></button>
+      <button class="choice-btn"></button>
+      <button class="choice-btn"></button>
+      <button class="choice-btn"></button>
+    </div>
+    <button id="start-btn">スタート</button>
+
+    <div id="score"></div>
+
+    <h2>ゲーム履歴</h2>
+
+    <div id="history"></div>
+
+    <h2>設定</h2>
+
+    <div id="settings">
+      <h3>問題の範囲</h3>
+
+      <label
+        ><input type="checkbox" id="level1" value="1" checked /> 1の段</label
+      >
+      <label
+        ><input type="checkbox" id="level2" value="2" checked /> 2の段</label
+      >
+      <label
+        ><input type="checkbox" id="level3" value="3" checked /> 3の段</label
+      >
+      <label
+        ><input type="checkbox" id="level4" value="4" checked /> 4の段</label
+      >
+      <label
+        ><input type="checkbox" id="level5" value="5" checked /> 5の段</label
+      >
+      <label
+        ><input type="checkbox" id="level6" value="6" checked /> 6の段</label
+      >
+      <label
+        ><input type="checkbox" id="level7" value="7" checked /> 7の段</label
+      >
+      <label
+        ><input type="checkbox" id="level8" value="8" checked /> 8の段</label
+      >
+      <label
+        ><input type="checkbox" id="level9" value="9" checked /> 9の段</label
+      >
+
+      <h3>問題数</h3>
+
+      <input type="number" id="questionCount" value="10" min="1" max="81" />
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
