@@ -273,7 +273,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function loadHistory() {
     const storedHistory = localStorage.getItem("gameHistory");
     if (storedHistory) {
-      gameHistory = JSON.parse(storedHistory);
+      // 例外発生時には空の配列を返す
+      try {
+        gameHistory = JSON.parse(storedHistory);
+      } catch (e) {
+        gameHistory = [];
+      }
     }
   }
 
