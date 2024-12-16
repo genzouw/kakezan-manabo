@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
   const completedQuestions = [];
-  const gameHistory = [];
+  let gameHistory = [];
 
   function generateMultiplicationQuestion() {
     const selectedLevels = Array.from(
