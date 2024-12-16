@@ -1,4 +1,3 @@
-const gameHistory = [];
 const multiplicationData = {
   "1x1": { reading: "いんいちが", answer: 1, answerReading: "いち" },
   "1x2": { reading: "いんにが", answer: 2, answerReading: "に" },
@@ -94,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentQuestion;
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
-  let gameHistory = [];
+  const completedQuestions = [];
+  const gameHistory = [];
 
   function generateMultiplicationQuestion() {
     const selectedLevels = Array.from(
@@ -106,20 +106,32 @@ document.addEventListener("DOMContentLoaded", function () {
       return null;
     }
 
-    let questionKey;
-    let num1, num2;
+    let availableQuestions = [];
+    for (const key in multiplicationData) {
+      if (multiplicationData.hasOwnProperty(key)) {
+        const num1 = parseInt(key.split("x")[0]);
+        if (selectedLevels.includes(num1)) {
+          availableQuestions.push(key);
+        }
+      }
+    }
 
-    do {
-      num1 = selectedLevels[Math.floor(Math.random() * selectedLevels.length)];
-      num2 = Math.floor(Math.random() * 9) + 1;
-      questionKey = `${num1}x${num2}`;
-    } while (gameHistory.some((history) => history.question === questionKey));
+    if (availableQuestions.length <= completedQuestions.length) {
+      completedQuestions.length = 0;
+    }
+
+    availableQuestions = availableQuestions.filter(
+      (question) => !completedQuestions.includes(question),
+    );
+
+    const questionKey =
+      availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+
+    completedQuestions.push(questionKey);
 
     return {
       question: questionKey.replace("x", " × ") + " = ",
       answer: multiplicationData[questionKey].answer,
-      num1: num1,
-      num2: num2,
       reading: multiplicationData[questionKey].reading,
       answerReading: multiplicationData[questionKey].answerReading,
       questionKey: questionKey,
@@ -131,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentQuestion === null) {
       return;
     }
-    gameHistory.push({ question: currentQuestion.questionKey });
     questionDiv.textContent = currentQuestion.question;
     speakQuestion(currentQuestion.reading);
     generateChoices();
