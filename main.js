@@ -209,11 +209,11 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = true;
     });
     const selectedButton = Array.from(choiceButtons).find(
-      (button) => button.textContent == selectedAnswer,
+      (button) => parseInt(button.textContent, 10) === selectedAnswer,
     );
     const correctAnswer = currentQuestion.answer;
     const correctAnswerButton = Array.from(choiceButtons).find(
-      (button) => button.textContent == correctAnswer,
+      (button) => parseInt(button.textContent, 10) === correctAnswer,
     );
 
     correctAnswerButton.style.backgroundColor = "lightgreen";
