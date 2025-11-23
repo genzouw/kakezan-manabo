@@ -141,10 +141,10 @@ export function displayCharacter(xp) {
   nameDiv.textContent = currentLevel.name;
   container.appendChild(nameDiv);
 
-  // XP表示
+  // ポイント表示
   const xpDiv = document.createElement("div");
   xpDiv.classList.add("character-xp");
-  xpDiv.textContent = `XP: ${xp}`;
+  xpDiv.textContent = `ポイント: ${xp}`;
   container.appendChild(xpDiv);
 
   // 進捗バー
