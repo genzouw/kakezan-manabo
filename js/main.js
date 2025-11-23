@@ -14,6 +14,13 @@ import {
 import { updateQuestionProgress, displayHistory } from "./ui.js";
 import { updateQuestionStats } from "./analytics.js";
 import { updateModeDescription } from "./ui-helper.js";
+import {
+  updateAchievementStats,
+  updateStreak,
+  checkNewBadges,
+  showBadgeModal,
+} from "./badges.js";
+import { displayBadgeCollection } from "./badge-display.js";
 
 let totalQuestions = 10;
 let learningMode = "normal";
@@ -28,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let correctAnswers = 0;
   const completedQuestions = [];
   let gameHistory = [];
+  let gameStartTime = null;
 
   async function displayQuestion() {
     const selectedLevels = Array.from(
@@ -72,6 +80,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // 学習分析用に正誤情報を記録
     updateQuestionStats(currentQuestion.questionKey, isCorrect);
 
+    // 連続正解数を更新
+    updateStreak(isCorrect);
+
     correctAnswerButton.style.backgroundColor = "lightgreen";
     if (isCorrect) {
       correctAnswers++;
@@ -97,16 +108,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function endGame(completedQuestions) {
+    const gameEndTime = Date.now();
+    const duration = gameStartTime ? gameEndTime - gameStartTime : null;
+
     const gameResult = {
       correctAnswers: correctAnswers,
       totalQuestions: totalQuestions,
       date: new Date().toLocaleString(),
       questions: completedQuestions,
+      duration: duration,
     };
 
     gameHistory.push(gameResult);
     saveHistory(gameHistory);
     displayHistory(gameHistory);
+
+    // 達成統計を更新
+    updateAchievementStats(gameResult);
+
+    // 新しく獲得したバッジをチェック
+    const newBadges = checkNewBadges();
+    if (newBadges.length > 0) {
+      showBadgeModal(newBadges);
+    }
+
     questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
     startButton.style.display = "inline-block";
@@ -115,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
   startButton.addEventListener("click", function () {
     currentQuestionIndex = 0;
     correctAnswers = 0;
+    gameStartTime = Date.now();
     startButton.style.display = "none";
     choiceButtons.forEach((button) => (button.style.display = "inline-block"));
     displayQuestion();
@@ -126,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
   learningMode = settings.learningMode;
   gameHistory = loadHistory();
   displayHistory(gameHistory);
+  displayBadgeCollection();
 
   document
     .querySelectorAll('#settings input[type="checkbox"]')
