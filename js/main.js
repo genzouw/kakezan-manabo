@@ -29,6 +29,9 @@ import { displayBadgeCollection } from "./badge-display.js";
 import { updateAllCharts } from "./charts.js";
 import { calculateXP, hasLeveledUp, getCurrentLevel } from "./character.js";
 
+// レベルアップモーダル表示の遅延時間（ミリ秒）
+const LEVEL_UP_MODAL_DELAY_MS = 2500;
+
 let totalQuestions = 10;
 let learningMode = "normal";
 
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const newLevel = getCurrentLevel(newXP);
         setTimeout(() => {
           showLevelUpModal(newLevel);
-        }, 2500);
+        }, LEVEL_UP_MODAL_DELAY_MS);
       }
 
       // キャラクター表示を更新
