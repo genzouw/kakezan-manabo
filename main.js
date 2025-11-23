@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const utterance = new SpeechSynthesisUtterance();
       utterance.text = questionReading;
       utterance.voice = speechSynthesis.getVoices().filter(function (n) {
-        return n.name == "Google 日本語";
+        return n.name === "Google 日本語";
       })[0];
       utterance.lang = "ja-JP";
       utterance.onend = resolve;
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const utterance = new SpeechSynthesisUtterance();
     utterance.text = answerReading;
     utterance.voice = speechSynthesis.getVoices().filter(function (n) {
-      return n.name == "Google 日本語";
+      return n.name === "Google 日本語";
     })[0];
     utterance.lang = "ja-JP";
     speechSynthesis.speak(utterance);
@@ -209,11 +209,11 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = true;
     });
     const selectedButton = Array.from(choiceButtons).find(
-      (button) => button.textContent == selectedAnswer,
+      (button) => parseInt(button.textContent) === selectedAnswer,
     );
     const correctAnswer = currentQuestion.answer;
     const correctAnswerButton = Array.from(choiceButtons).find(
-      (button) => button.textContent == correctAnswer,
+      (button) => parseInt(button.textContent) === correctAnswer,
     );
 
     correctAnswerButton.style.backgroundColor = "lightgreen";
@@ -322,8 +322,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .replace(/\//g, "/");
       const dateCell = document.createElement("td");
       dateCell.textContent = formattedDate;
-      row.appendChild(dateCell);
-
       row.appendChild(dateCell);
 
       const correctAnswersCell = document.createElement("td");
