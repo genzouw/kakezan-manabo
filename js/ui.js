@@ -244,7 +244,13 @@ export function displayRewardCalendar() {
   const streak = getCurrentStreak();
   const streakDiv = document.createElement("div");
   streakDiv.classList.add("calendar-streak");
-  streakDiv.innerHTML = `<span class="streak-emoji">🔥</span> <span class="streak-number">${streak}</span> にちれんぞく！`;
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "streak-emoji";
+  emojiSpan.textContent = "🔥";
+  const numberSpan = document.createElement("span");
+  numberSpan.className = "streak-number";
+  numberSpan.textContent = streak;
+  streakDiv.append(emojiSpan, " ", numberSpan, " にちれんぞく！");
   calendarDiv.appendChild(streakDiv);
 
   // 今月のカレンダーを生成
