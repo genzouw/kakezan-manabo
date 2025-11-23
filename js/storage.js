@@ -129,3 +129,32 @@ export function updateCorrectStreak(questionKey) {
     }
   }
 }
+
+/**
+ * キャラクターのXPを読み込み
+ * @returns {number} 現在のXP
+ */
+export function loadCharacterXP() {
+  const storedXP = localStorage.getItem("characterXP");
+  return storedXP ? parseInt(storedXP) : 0;
+}
+
+/**
+ * キャラクターのXPを保存
+ * @param {number} xp - 新しいXP
+ */
+export function saveCharacterXP(xp) {
+  localStorage.setItem("characterXP", xp.toString());
+}
+
+/**
+ * XPを加算
+ * @param {number} amount - 加算するXP
+ * @returns {number} 新しい合計XP
+ */
+export function addCharacterXP(amount) {
+  const currentXP = loadCharacterXP();
+  const newXP = currentXP + amount;
+  saveCharacterXP(newXP);
+  return newXP;
+}

@@ -13,8 +13,10 @@ import {
   recordMistake,
   updateCorrectStreak,
   loadMistakes,
+  loadCharacterXP,
+  addCharacterXP,
 } from "./storage.js";
-import { updateQuestionProgress, displayHistory, displayMistakeNotebook } from "./ui.js";
+import { updateQuestionProgress, displayHistory, displayMistakeNotebook, displayCharacter, showLevelUpModal } from "./ui.js";
 import { updateQuestionStats } from "./analytics.js";
 import { updateModeDescription } from "./ui-helper.js";
 import {
@@ -25,6 +27,7 @@ import {
 } from "./badges.js";
 import { displayBadgeCollection } from "./badge-display.js";
 import { updateAllCharts } from "./charts.js";
+import { calculateXP, hasLeveledUp, getCurrentLevel } from "./character.js";
 
 let totalQuestions = 10;
 let learningMode = "normal";
@@ -93,6 +96,22 @@ document.addEventListener("DOMContentLoaded", function () {
       playCorrectSound();
       // 正解時に連続正解カウントを更新（間違いノートに登録されている場合）
       updateCorrectStreak(currentQuestion.questionKey);
+
+      // キャラクターにXPを加算
+      const oldXP = loadCharacterXP();
+      const xpGained = calculateXP(true);
+      const newXP = addCharacterXP(xpGained);
+
+      // レベルアップチェック
+      if (hasLeveledUp(oldXP, newXP)) {
+        const newLevel = getCurrentLevel(newXP);
+        setTimeout(() => {
+          showLevelUpModal(newLevel);
+        }, 2500);
+      }
+
+      // キャラクター表示を更新
+      displayCharacter(newXP);
     } else {
       selectedButton.style.backgroundColor = "pink";
       playIncorrectSound();
@@ -170,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
   displayBadgeCollection();
   updateAllCharts();
   displayMistakeNotebook(loadMistakes());
+  displayCharacter(loadCharacterXP());
 
   document
     .querySelectorAll('#settings input[type="checkbox"]')
