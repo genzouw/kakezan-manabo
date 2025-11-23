@@ -399,7 +399,7 @@ h3 {
 
 .mistake-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   margin-top: 15px;
   max-width: 100%;
@@ -802,6 +802,10 @@ h3 {
   .calendar-stamp {
     font-size: 1.2em;
   }
+
+  .mistake-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
@@ -880,7 +884,7 @@ h3 {
   }
 
   .mistake-cards {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
@@ -919,7 +923,11 @@ h3 {
     font-size: 1em;
   }
 
-  .mistake-cards,
+  .mistake-cards {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
   .badge-collection {
     grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
     gap: 8px;
