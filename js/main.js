@@ -28,6 +28,7 @@ import {
 } from "./badges.js";
 import { displayBadgeCollection } from "./badge-display.js";
 import { updateAllCharts } from "./charts.js";
+import { MenuManager } from "./menu.js";
 import { calculateXP, hasLeveledUp, getCurrentLevel } from "./character.js";
 
 // レベルアップモーダル表示の遅延時間（ミリ秒）
@@ -37,6 +38,9 @@ let totalQuestions = 10;
 let learningMode = "normal";
 
 document.addEventListener("DOMContentLoaded", function () {
+  // メニューマネージャーを初期化
+  const menuManager = new MenuManager();
+
   const questionDiv = document.getElementById("question");
   const choiceButtons = document.querySelectorAll(".choice-btn");
   const startButton = document.getElementById("start-btn");

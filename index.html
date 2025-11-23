@@ -8,103 +8,103 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   </head>
   <body>
-    <div id="question"></div>
-    <div id="choices">
-      <button class="choice-btn"></button>
-      <button class="choice-btn"></button>
-      <button class="choice-btn"></button>
-      <button class="choice-btn"></button>
+    <!-- メニューボタン -->
+    <button id="menu-btn" class="menu-btn" aria-label="メニュー">☰</button>
+
+    <!-- メインコンテンツ（トップページ） -->
+    <div id="main-content" class="page-content active">
+      <div id="question"></div>
+      <div id="choices">
+        <button class="choice-btn"></button>
+        <button class="choice-btn"></button>
+        <button class="choice-btn"></button>
+        <button class="choice-btn"></button>
+      </div>
+      <button id="start-btn">スタート</button>
+
+      <div id="score"></div>
+
+      <h2>🐣 キャラクター</h2>
+      <div id="character"></div>
+
+      <h2>🏆 できたバッジ</h2>
+      <div id="badges"></div>
+
+      <h2>📅 がんばりカレンダー</h2>
+      <div id="reward-calendar"></div>
     </div>
-    <button id="start-btn">スタート</button>
 
-    <div id="score"></div>
+    <!-- サイドメニュー -->
+    <nav id="side-menu" class="side-menu">
+      <button id="close-menu-btn" class="close-menu-btn" aria-label="メニューを閉じる">×</button>
+      <ul class="menu-list">
+        <li><a href="#" class="menu-item active" data-page="main">🏠 ホーム</a></li>
+        <li><a href="#" class="menu-item" data-page="statistics">📊 がくしゅうきろく</a></li>
+        <li><a href="#" class="menu-item" data-page="history">📖 これまでのきろく</a></li>
+        <li><a href="#" class="menu-item" data-page="mistakes">📝 もういちどチャレンジ</a></li>
+        <li><a href="#" class="menu-item" data-page="settings">⚙️ せってい</a></li>
+      </ul>
+    </nav>
 
-    <h2>🐣 キャラクター</h2>
-
-    <div id="character"></div>
-
-    <h2>📊 がくしゅうきろく</h2>
-
-    <div id="statistics">
-      <div id="statisticsSummary"></div>
-
-      <div class="charts-container">
-        <div class="chart-wrapper">
-          <canvas id="levelAccuracyChart"></canvas>
-        </div>
-        <div class="chart-wrapper">
-          <canvas id="dailyHistoryChart"></canvas>
-        </div>
-        <div class="chart-wrapper">
-          <canvas id="timeOfDayChart"></canvas>
+    <!-- がくしゅうきろくページ -->
+    <div id="statistics-content" class="page-content">
+      <h2>📊 がくしゅうきろく</h2>
+      <div id="statistics">
+        <div id="statisticsSummary"></div>
+        <div class="charts-container">
+          <div class="chart-wrapper">
+            <canvas id="levelAccuracyChart"></canvas>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="dailyHistoryChart"></canvas>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="timeOfDayChart"></canvas>
+          </div>
         </div>
       </div>
     </div>
 
-    <h2>📅 がんばりカレンダー</h2>
+    <!-- これまでのきろくページ -->
+    <div id="history-content" class="page-content">
+      <h2>📖 これまでのきろく</h2>
+      <div id="history"></div>
+    </div>
 
-    <div id="reward-calendar"></div>
+    <!-- もういちどチャレンジページ -->
+    <div id="mistakes-content" class="page-content">
+      <h2>📝 もういちどチャレンジ</h2>
+      <div id="mistake-notebook"></div>
+    </div>
 
-    <h2>📝 もういちどチャレンジ</h2>
+    <!-- せっていページ -->
+    <div id="settings-content" class="page-content">
+      <h2>⚙️ せってい</h2>
+      <div id="settings">
+        <h3>もんだいのモード</h3>
+        <select id="learningMode">
+          <option value="normal">ふつうモード</option>
+          <option value="weak">にがてもんだいモード</option>
+          <option value="adaptive">じぶんにあったモード</option>
+        </select>
+        <p class="mode-description">
+          <span id="modeDescription">いろいろなもんだいがでるよ</span>
+        </p>
 
-    <div id="mistake-notebook"></div>
+        <h3>れんしゅうするだん</h3>
+        <label><input type="checkbox" id="level1" value="1" checked /> 1のだん</label>
+        <label><input type="checkbox" id="level2" value="2" checked /> 2のだん</label>
+        <label><input type="checkbox" id="level3" value="3" checked /> 3のだん</label>
+        <label><input type="checkbox" id="level4" value="4" checked /> 4のだん</label>
+        <label><input type="checkbox" id="level5" value="5" checked /> 5のだん</label>
+        <label><input type="checkbox" id="level6" value="6" checked /> 6のだん</label>
+        <label><input type="checkbox" id="level7" value="7" checked /> 7のだん</label>
+        <label><input type="checkbox" id="level8" value="8" checked /> 8のだん</label>
+        <label><input type="checkbox" id="level9" value="9" checked /> 9のだん</label>
 
-    <h2>🏆 できたバッジ</h2>
-
-    <div id="badges"></div>
-
-    <h2>📖 これまでのきろく</h2>
-
-    <div id="history"></div>
-
-    <h2>⚙️ せってい</h2>
-
-    <div id="settings">
-      <h3>もんだいのモード</h3>
-
-      <select id="learningMode">
-        <option value="normal">ふつうモード</option>
-        <option value="weak">にがてもんだいモード</option>
-        <option value="adaptive">じぶんにあったモード</option>
-      </select>
-
-      <p class="mode-description">
-        <span id="modeDescription">いろいろなもんだいがでるよ</span>
-      </p>
-
-      <h3>れんしゅうするだん</h3>
-
-      <label
-        ><input type="checkbox" id="level1" value="1" checked /> 1のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level2" value="2" checked /> 2のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level3" value="3" checked /> 3のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level4" value="4" checked /> 4のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level5" value="5" checked /> 5のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level6" value="6" checked /> 6のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level7" value="7" checked /> 7のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level8" value="8" checked /> 8のだん</label
-      >
-      <label
-        ><input type="checkbox" id="level9" value="9" checked /> 9のだん</label
-      >
-
-      <h3>もんだいのかず</h3>
-
-      <input type="number" id="questionCount" value="10" min="1" max="81" />
+        <h3>もんだいのかず</h3>
+        <input type="number" id="questionCount" value="10" min="1" max="81" />
+      </div>
     </div>
 
     <script type="module" src="./js/main.js"></script>
