@@ -208,16 +208,22 @@ export function showLevelUpModal(newLevel) {
   const closeButton = document.createElement("button");
   closeButton.textContent = "やったね！";
   closeButton.classList.add("modal-close-btn");
-  closeButton.onclick = () => modal.remove();
   modalContent.appendChild(closeButton);
 
   modal.appendChild(modalContent);
   document.body.appendChild(modal);
 
   // 3秒後に自動的に閉じる
-  setTimeout(() => {
+  const MODAL_AUTO_CLOSE_DELAY_MS = 3000;
+  const timeoutId = setTimeout(() => {
     if (modal.parentNode) {
       modal.remove();
     }
-  }, 3000);
+  }, MODAL_AUTO_CLOSE_DELAY_MS);
+
+  // 閉じるボタンの処理
+  closeButton.onclick = () => {
+    clearTimeout(timeoutId);
+    modal.remove();
+  };
 }
