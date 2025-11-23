@@ -1,0 +1,22 @@
+{
+  "name": "kakezan-manabo",
+  "version": "1.0.0",
+  "description": "掛け算学習アプリ - 子供向けインタラクティブ掛け算練習ツール",
+  "main": "js/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "http-server -p 8000 -c-1 -o",
+    "dev": "http-server -p 8000 -c-1"
+  },
+  "keywords": [
+    "education",
+    "multiplication",
+    "math",
+    "learning"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
