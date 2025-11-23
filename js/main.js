@@ -15,8 +15,9 @@ import {
   loadMistakes,
   loadCharacterXP,
   addCharacterXP,
+  recordTodayStudy,
 } from "./storage.js";
-import { updateQuestionProgress, displayHistory, displayMistakeNotebook, displayCharacter, showLevelUpModal } from "./ui.js";
+import { updateQuestionProgress, displayHistory, displayMistakeNotebook, displayCharacter, showLevelUpModal, displayRewardCalendar } from "./ui.js";
 import { updateQuestionStats } from "./analytics.js";
 import { updateModeDescription } from "./ui-helper.js";
 import {
@@ -153,6 +154,9 @@ document.addEventListener("DOMContentLoaded", function () {
     saveHistory(gameHistory);
     displayHistory(gameHistory);
 
+    // 今日の学習を記録
+    recordTodayStudy();
+
     // 達成統計を更新
     updateAchievementStats(gameResult);
 
@@ -168,6 +172,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // まちがいノートを更新
     displayMistakeNotebook(loadMistakes());
+
+    // カレンダーを更新
+    displayRewardCalendar();
 
     questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
@@ -193,6 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
   updateAllCharts();
   displayMistakeNotebook(loadMistakes());
   displayCharacter(loadCharacterXP());
+  displayRewardCalendar();
 
   document
     .querySelectorAll('#settings input[type="checkbox"]')

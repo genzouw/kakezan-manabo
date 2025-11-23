@@ -558,3 +558,131 @@ h3 {
 .modal-close-btn:hover {
   transform: scale(1.1);
 }
+
+/* ごほうびカレンダー */
+#reward-calendar {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.calendar-streak {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streak-emoji {
+  font-size: 1.5em;
+  animation: flame 1s infinite;
+}
+
+@keyframes flame {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.streak-number {
+  font-size: 2em;
+  color: #ffeb3b;
+}
+
+.calendar-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #2d3436;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.calendar-weekday {
+  font-weight: bold;
+  padding: 10px;
+  background-color: #74b9ff;
+  color: white;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: 2px solid #dfe6e9;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.calendar-day-empty {
+  border: none;
+  background-color: transparent;
+}
+
+.calendar-day-number {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #636e72;
+}
+
+.calendar-day-studied {
+  background: linear-gradient(135deg, #fdcb6e 0%, #ffeaa7 100%);
+  border-color: #fdcb6e;
+  transform: scale(1.05);
+}
+
+.calendar-day-studied .calendar-day-number {
+  color: #2d3436;
+}
+
+.calendar-stamp {
+  font-size: 2em;
+  animation: popIn 0.5s ease;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.calendar-day-today {
+  border: 3px solid #0984e3;
+  box-shadow: 0 0 10px rgba(9, 132, 227, 0.5);
+}
+
+.calendar-day:hover:not(.calendar-day-empty) {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

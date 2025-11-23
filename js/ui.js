@@ -1,4 +1,5 @@
 import { getCurrentLevel, getProgressToNextLevel } from "./character.js";
+import { loadCalendar, getCurrentStreak } from "./storage.js";
 
 export function updateQuestionProgress(currentQuestionIndex) {
   const scoreDiv = document.getElementById("score");
@@ -226,4 +227,103 @@ export function showLevelUpModal(newLevel) {
     clearTimeout(timeoutId);
     modal.remove();
   };
+}
+
+/**
+ * ごほうびカレンダーを表示
+ */
+export function displayRewardCalendar() {
+  const calendarDiv = document.getElementById("reward-calendar");
+  if (!calendarDiv) {
+    return;
+  }
+
+  calendarDiv.innerHTML = "";
+
+  // 連続学習日数を表示
+  const streak = getCurrentStreak();
+  const streakDiv = document.createElement("div");
+  streakDiv.classList.add("calendar-streak");
+  streakDiv.innerHTML = `<span class="streak-emoji">🔥</span> <span class="streak-number">${streak}</span> にちれんぞく！`;
+  calendarDiv.appendChild(streakDiv);
+
+  // 今月のカレンダーを生成
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  // 月の最初の日と最後の日を取得
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+
+  // カレンダーヘッダー
+  const headerDiv = document.createElement("div");
+  headerDiv.classList.add("calendar-header");
+  headerDiv.textContent = `${year}ねん ${month + 1}がつ`;
+  calendarDiv.appendChild(headerDiv);
+
+  // 曜日ヘッダー
+  const weekdaysDiv = document.createElement("div");
+  weekdaysDiv.classList.add("calendar-weekdays");
+  const weekdays = ["にち", "げつ", "か", "すい", "もく", "きん", "ど"];
+  weekdays.forEach((day) => {
+    const dayDiv = document.createElement("div");
+    dayDiv.classList.add("calendar-weekday");
+    dayDiv.textContent = day;
+    weekdaysDiv.appendChild(dayDiv);
+  });
+  calendarDiv.appendChild(weekdaysDiv);
+
+  // カレンダーグリッド
+  const gridDiv = document.createElement("div");
+  gridDiv.classList.add("calendar-grid");
+
+  // 学習データを読み込み
+  const calendar = loadCalendar();
+
+  // 最初の日の曜日まで空セルを追加
+  const firstDayOfWeek = firstDay.getDay();
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    const emptyCell = document.createElement("div");
+    emptyCell.classList.add("calendar-day", "calendar-day-empty");
+    gridDiv.appendChild(emptyCell);
+  }
+
+  // 各日付のセルを追加
+  for (let date = 1; date <= lastDay.getDate(); date++) {
+    const dayCell = document.createElement("div");
+    dayCell.classList.add("calendar-day");
+
+    const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
+    const studyCount = calendar[dateKey] || 0;
+
+    // 日付番号
+    const dateNumber = document.createElement("div");
+    dateNumber.classList.add("calendar-day-number");
+    dateNumber.textContent = date;
+    dayCell.appendChild(dateNumber);
+
+    // スタンプ表示
+    if (studyCount > 0) {
+      const stamp = document.createElement("div");
+      stamp.classList.add("calendar-stamp");
+      stamp.textContent = "⭐";
+      dayCell.appendChild(stamp);
+
+      dayCell.classList.add("calendar-day-studied");
+    }
+
+    // 今日の日付をハイライト
+    if (
+      date === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    ) {
+      dayCell.classList.add("calendar-day-today");
+    }
+
+    gridDiv.appendChild(dayCell);
+  }
+
+  calendarDiv.appendChild(gridDiv);
 }
