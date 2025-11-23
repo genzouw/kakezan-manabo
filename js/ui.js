@@ -43,8 +43,6 @@ export function displayHistory(gameHistory) {
     dateCell.textContent = formattedDate;
     row.appendChild(dateCell);
 
-    row.appendChild(dateCell);
-
     const correctAnswersCell = document.createElement("td");
     correctAnswersCell.textContent = `${result.correctAnswers === result.totalQuestions ? "🥇" : result.correctAnswers === result.totalQuestions - 1 ? "🥈" : ""}${result.correctAnswers}`;
     row.appendChild(correctAnswersCell);
