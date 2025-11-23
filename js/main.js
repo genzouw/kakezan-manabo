@@ -27,7 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let gameHistory = [];
 
   async function displayQuestion() {
-    currentQuestion = generateMultiplicationQuestion(completedQuestions);
+    const selectedLevels = Array.from(
+      document.querySelectorAll('#settings input[type="checkbox"]:checked'),
+    ).map((checkbox) => parseInt(checkbox.value));
+    currentQuestion = generateMultiplicationQuestion(completedQuestions, selectedLevels);
     if (currentQuestion === null) {
       return;
     }

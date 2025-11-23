@@ -1,10 +1,6 @@
 import { multiplicationData } from "./data.js";
 
-export function generateMultiplicationQuestion(completedQuestions) {
-  const selectedLevels = Array.from(
-    document.querySelectorAll('#settings input[type="checkbox"]:checked'),
-  ).map((checkbox) => parseInt(checkbox.value));
-
+export function generateMultiplicationQuestion(completedQuestions, selectedLevels) {
   if (selectedLevels.length === 0) {
     alert("少なくとも一つの段を選択してください。");
     return null;
