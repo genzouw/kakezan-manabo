@@ -35,12 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     questionDiv.textContent = currentQuestion.question;
-    await speakQuestion(currentQuestion.reading);
     displayChoices();
     choiceButtons.forEach((button) => {
       button.style.backgroundColor = "#f0f0f0";
       button.style.opacity = 1;
     });
+    await speakQuestion(currentQuestion.reading);
   }
 
   function displayChoices() {
