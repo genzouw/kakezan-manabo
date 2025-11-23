@@ -237,12 +237,12 @@ export function renderStatisticsSummary() {
   if (weakQuestions.length > 0) {
     weakQuestionsHTML = `
       <div class="weak-questions">
-        <h4>苦手な問題トップ5</h4>
+        <h4>もっとれんしゅうしたいもんだい ベスト5</h4>
         <ul>
           ${weakQuestions
             .map(
               (q) =>
-                `<li>${q.question}: ${q.accuracy.toFixed(1)}% (${q.attempts}回)`
+                `<li>${q.question}: ${q.accuracy.toFixed(1)}% (${q.attempts}かい)`
             )
             .join("")}
         </ul>
@@ -251,8 +251,8 @@ export function renderStatisticsSummary() {
   } else {
     weakQuestionsHTML = `
       <div class="weak-questions">
-        <h4>苦手な問題トップ5</h4>
-        <p>まだデータがありません。3回以上挑戦した問題から表示されます。</p>
+        <h4>もっとれんしゅうしたいもんだい ベスト5</h4>
+        <p>まだデータがないよ。3かいいじょうチャレンジしたもんだいがでてくるよ。</p>
       </div>
     `;
   }
@@ -261,11 +261,11 @@ export function renderStatisticsSummary() {
     <div class="summary-cards">
       <div class="summary-card">
         <div class="summary-value">${studyTime.week}</div>
-        <div class="summary-label">今週のプレイ回数</div>
+        <div class="summary-label">こんしゅうやったかず</div>
       </div>
       <div class="summary-card">
         <div class="summary-value">${studyTime.month}</div>
-        <div class="summary-label">今月のプレイ回数</div>
+        <div class="summary-label">こんげつやったかず</div>
       </div>
     </div>
     ${weakQuestionsHTML}

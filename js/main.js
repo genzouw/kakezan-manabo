@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // カレンダーを更新
     displayRewardCalendar();
 
-    questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
+    questionDiv.textContent = `せいかいは ${correctAnswers}こ だったよ！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
     startButton.style.display = "inline-block";
   }

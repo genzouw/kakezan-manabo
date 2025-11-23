@@ -257,7 +257,7 @@ export function showBadgeModal(badges) {
   modal.className = "badge-modal";
   modal.innerHTML = `
     <div class="badge-modal-content">
-      <h2>🎉 バッジ獲得！</h2>
+      <h2>🎉 バッジをゲットしたよ！</h2>
       <div class="badge-list">
         ${badges
           .map(
@@ -271,7 +271,7 @@ export function showBadgeModal(badges) {
           )
           .join("")}
       </div>
-      <button class="badge-close-btn">閉じる</button>
+      <button class="badge-close-btn">とじる</button>
     </div>
   `;
 
