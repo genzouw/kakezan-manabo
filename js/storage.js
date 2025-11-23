@@ -12,9 +12,20 @@ export function loadSettings() {
   const storedQuestionCount = localStorage.getItem("questionCount");
   if (storedQuestionCount) {
     document.getElementById("questionCount").value = storedQuestionCount;
-    return parseInt(storedQuestionCount);
   }
-  return 10;
+
+  const storedMode = localStorage.getItem("learningMode");
+  if (storedMode) {
+    const modeSelect = document.getElementById("learningMode");
+    if (modeSelect) {
+      modeSelect.value = storedMode;
+    }
+  }
+
+  return {
+    questionCount: storedQuestionCount ? parseInt(storedQuestionCount) : 10,
+    learningMode: storedMode || "normal",
+  };
 }
 
 export function saveSettings() {
@@ -25,7 +36,16 @@ export function saveSettings() {
 
   const questionCount = document.getElementById("questionCount").value;
   localStorage.setItem("questionCount", questionCount);
-  return parseInt(questionCount);
+
+  const modeSelect = document.getElementById("learningMode");
+  if (modeSelect) {
+    localStorage.setItem("learningMode", modeSelect.value);
+  }
+
+  return {
+    questionCount: parseInt(questionCount),
+    learningMode: modeSelect ? modeSelect.value : "normal",
+  };
 }
 
 export function loadHistory() {

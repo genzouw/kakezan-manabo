@@ -12,8 +12,11 @@ import {
   saveHistory,
 } from "./storage.js";
 import { updateQuestionProgress, displayHistory } from "./ui.js";
+import { updateQuestionStats } from "./analytics.js";
+import { updateModeDescription } from "./ui-helper.js";
 
 let totalQuestions = 10;
+let learningMode = "normal";
 
 document.addEventListener("DOMContentLoaded", function () {
   const questionDiv = document.getElementById("question");
@@ -30,7 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedLevels = Array.from(
       document.querySelectorAll('#settings input[type="checkbox"]:checked'),
     ).map((checkbox) => parseInt(checkbox.value));
-    currentQuestion = generateMultiplicationQuestion(completedQuestions, selectedLevels);
+    currentQuestion = generateMultiplicationQuestion(
+      completedQuestions,
+      selectedLevels,
+      learningMode
+    );
     if (currentQuestion === null) {
       return;
     }
@@ -57,12 +64,16 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = true;
     });
     const correctAnswer = currentQuestion.answer;
+    const isCorrect = selectedAnswer === correctAnswer;
     const correctAnswerButton = Array.from(choiceButtons).find(
       (button) => button.textContent == correctAnswer,
     );
 
+    // 学習分析用に正誤情報を記録
+    updateQuestionStats(currentQuestion.questionKey, isCorrect);
+
     correctAnswerButton.style.backgroundColor = "lightgreen";
-    if (selectedAnswer === correctAnswer) {
+    if (isCorrect) {
       correctAnswers++;
       playCorrectSound();
     } else {
@@ -110,17 +121,38 @@ document.addEventListener("DOMContentLoaded", function () {
     updateQuestionProgress(currentQuestionIndex);
   });
 
-  totalQuestions = loadSettings();
+  const settings = loadSettings();
+  totalQuestions = settings.questionCount;
+  learningMode = settings.learningMode;
   gameHistory = loadHistory();
   displayHistory(gameHistory);
+
   document
     .querySelectorAll('#settings input[type="checkbox"]')
     .forEach((checkbox) => {
       checkbox.addEventListener("change", () => {
-        totalQuestions = saveSettings();
+        const newSettings = saveSettings();
+        totalQuestions = newSettings.questionCount;
+        learningMode = newSettings.learningMode;
       });
     });
+
   document.getElementById("questionCount").addEventListener("change", () => {
-    totalQuestions = saveSettings();
+    const newSettings = saveSettings();
+    totalQuestions = newSettings.questionCount;
+    learningMode = newSettings.learningMode;
   });
+
+  const modeSelect = document.getElementById("learningMode");
+  if (modeSelect) {
+    modeSelect.addEventListener("change", () => {
+      const newSettings = saveSettings();
+      totalQuestions = newSettings.questionCount;
+      learningMode = newSettings.learningMode;
+      updateModeDescription();
+    });
+  }
+
+  // 初期表示時にモードの説明を更新
+  updateModeDescription();
 });
