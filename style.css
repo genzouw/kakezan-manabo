@@ -358,3 +358,52 @@ h3 {
 .chart-wrapper canvas {
   max-height: 100%;
 }
+
+/* まちがいノート */
+#mistake-notebook {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.mistake-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.mistake-card {
+  background-color: #fff9e6;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.mistake-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.mistake-question {
+  font-size: 2em;
+  font-weight: bold;
+  color: #ff6600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mistake-progress {
+  font-size: 1.2em;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.mistake-help {
+  font-size: 0.9em;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+}

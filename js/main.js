@@ -10,8 +10,11 @@ import {
   saveSettings,
   loadHistory,
   saveHistory,
+  recordMistake,
+  updateCorrectStreak,
+  loadMistakes,
 } from "./storage.js";
-import { updateQuestionProgress, displayHistory } from "./ui.js";
+import { updateQuestionProgress, displayHistory, displayMistakeNotebook } from "./ui.js";
 import { updateQuestionStats } from "./analytics.js";
 import { updateModeDescription } from "./ui-helper.js";
 import {
@@ -88,10 +91,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isCorrect) {
       correctAnswers++;
       playCorrectSound();
+      // 正解時に連続正解カウントを更新（間違いノートに登録されている場合）
+      updateCorrectStreak(currentQuestion.questionKey);
     } else {
       selectedButton.style.backgroundColor = "pink";
       playIncorrectSound();
       speakAnswer(currentQuestion.answerReading);
+      // 不正解時に間違いノートに記録
+      recordMistake(currentQuestion.questionKey);
     }
 
     setTimeout(async () => {
@@ -137,6 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
     updateAllCharts();
     displayBadgeCollection();
 
+    // まちがいノートを更新
+    displayMistakeNotebook(loadMistakes());
+
     questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
     startButton.style.display = "inline-block";
@@ -159,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
   displayHistory(gameHistory);
   displayBadgeCollection();
   updateAllCharts();
+  displayMistakeNotebook(loadMistakes());
 
   document
     .querySelectorAll('#settings input[type="checkbox"]')

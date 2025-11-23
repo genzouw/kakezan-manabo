@@ -63,3 +63,69 @@ export function loadHistory() {
 export function saveHistory(gameHistory) {
   localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
 }
+
+/**
+ * 間違いノートを読み込み
+ * @returns {Array<{questionKey: string, consecutiveCorrect: number}>}
+ */
+export function loadMistakes() {
+  const storedMistakes = localStorage.getItem("mistakes");
+  if (storedMistakes) {
+    try {
+      return JSON.parse(storedMistakes);
+    } catch (e) {
+      return [];
+    }
+  }
+  return [];
+}
+
+/**
+ * 間違いノートを保存
+ * @param {Array<{questionKey: string, consecutiveCorrect: number}>} mistakes
+ */
+export function saveMistakes(mistakes) {
+  localStorage.setItem("mistakes", JSON.stringify(mistakes));
+}
+
+/**
+ * 間違った問題を記録
+ * @param {string} questionKey - 問題のキー (例: "7x6")
+ */
+export function recordMistake(questionKey) {
+  const mistakes = loadMistakes();
+  const existing = mistakes.find((m) => m.questionKey === questionKey);
+
+  if (!existing) {
+    mistakes.push({
+      questionKey,
+      consecutiveCorrect: 0,
+    });
+    saveMistakes(mistakes);
+  } else {
+    // 既に記録されている場合は連続正解カウントをリセット
+    existing.consecutiveCorrect = 0;
+    saveMistakes(mistakes);
+  }
+}
+
+/**
+ * 正解時に連続正解カウントを更新
+ * @param {string} questionKey
+ */
+export function updateCorrectStreak(questionKey) {
+  const mistakes = loadMistakes();
+  const existing = mistakes.find((m) => m.questionKey === questionKey);
+
+  if (existing) {
+    existing.consecutiveCorrect += 1;
+
+    // 3回連続正解したら削除（卒業）
+    if (existing.consecutiveCorrect >= 3) {
+      const filtered = mistakes.filter((m) => m.questionKey !== questionKey);
+      saveMistakes(filtered);
+    } else {
+      saveMistakes(mistakes);
+    }
+  }
+}
