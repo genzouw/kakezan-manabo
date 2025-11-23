@@ -11,7 +11,7 @@ import {
   loadHistory,
   saveHistory,
 } from "./storage.js";
-import { updateScore, displayHistory } from "./ui.js";
+import { updateQuestionProgress, displayHistory } from "./ui.js";
 
 let totalQuestions = 10;
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(async () => {
       currentQuestionIndex++;
-      updateScore(currentQuestionIndex);
+      updateQuestionProgress(currentQuestionIndex);
       choiceButtons.forEach((button) => {
         button.disabled = false;
       });
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     startButton.style.display = "none";
     choiceButtons.forEach((button) => (button.style.display = "inline-block"));
     displayQuestion();
-    updateScore(currentQuestionIndex);
+    updateQuestionProgress(currentQuestionIndex);
   });
 
   totalQuestions = loadSettings();

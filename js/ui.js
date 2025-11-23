@@ -1,4 +1,4 @@
-export function updateScore(currentQuestionIndex) {
+export function updateQuestionProgress(currentQuestionIndex) {
   const scoreDiv = document.getElementById("score");
   scoreDiv.textContent = `${currentQuestionIndex + 1} 問目`;
 }
