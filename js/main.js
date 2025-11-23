@@ -80,17 +80,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (currentQuestionIndex < totalQuestions) {
         await displayQuestion();
       } else {
-        endGame();
+        endGame(completedQuestions);
       }
     }, 2000);
   }
 
-  function endGame() {
+  function endGame(completedQuestions) {
     const gameResult = {
       correctAnswers: correctAnswers,
       totalQuestions: totalQuestions,
       date: new Date().toLocaleString(),
-      questions: gameHistory.map((history) => history.question),
+      questions: completedQuestions,
     };
 
     gameHistory.push(gameResult);
