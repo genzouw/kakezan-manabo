@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>掛け算学習アプリ</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   </head>
   <body>
     <div id="question"></div>
@@ -17,6 +18,24 @@
     <button id="start-btn">スタート</button>
 
     <div id="score"></div>
+
+    <h2>学習統計</h2>
+
+    <div id="statistics">
+      <div id="statisticsSummary"></div>
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <canvas id="levelAccuracyChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="dailyHistoryChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="timeOfDayChart"></canvas>
+        </div>
+      </div>
+    </div>
 
     <h2>バッジコレクション</h2>
 

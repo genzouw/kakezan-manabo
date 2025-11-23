@@ -21,6 +21,7 @@ import {
   showBadgeModal,
 } from "./badges.js";
 import { displayBadgeCollection } from "./badge-display.js";
+import { updateAllCharts } from "./charts.js";
 
 let totalQuestions = 10;
 let learningMode = "normal";
@@ -132,6 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
       showBadgeModal(newBadges);
     }
 
+    // グラフを更新
+    updateAllCharts();
+    displayBadgeCollection();
+
     questionDiv.textContent = `正解数は ${correctAnswers} でした！`;
     choiceButtons.forEach((button) => (button.style.display = "none"));
     startButton.style.display = "inline-block";
@@ -153,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
   gameHistory = loadHistory();
   displayHistory(gameHistory);
   displayBadgeCollection();
+  updateAllCharts();
 
   document
     .querySelectorAll('#settings input[type="checkbox"]')
