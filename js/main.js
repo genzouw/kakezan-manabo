@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const completedQuestions = [];
   let gameHistory = [];
 
-  function displayQuestion() {
+  async function displayQuestion() {
     currentQuestion = generateMultiplicationQuestion(completedQuestions);
     if (currentQuestion === null) {
       return;
     }
     questionDiv.textContent = currentQuestion.question;
-    speakQuestion(currentQuestion.reading);
+    await speakQuestion(currentQuestion.reading);
     displayChoices();
     choiceButtons.forEach((button) => {
       button.style.backgroundColor = "#f0f0f0";
