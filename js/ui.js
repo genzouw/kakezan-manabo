@@ -57,7 +57,11 @@ export function displayHistory(gameHistory) {
     table.appendChild(row);
   });
 
-  historyDiv.appendChild(table);
+  // テーブルをラッパーで囲む（モバイル対応）
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("history-table-wrapper");
+  wrapper.appendChild(table);
+  historyDiv.appendChild(wrapper);
 }
 
 /**
