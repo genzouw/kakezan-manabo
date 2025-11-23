@@ -3,7 +3,7 @@ import { loadCalendar, getCurrentStreak } from "./storage.js";
 
 export function updateQuestionProgress(currentQuestionIndex) {
   const scoreDiv = document.getElementById("score");
-  scoreDiv.textContent = `${currentQuestionIndex + 1} 問目`;
+  scoreDiv.textContent = `${currentQuestionIndex + 1} もんめ`;
 }
 
 export function displayHistory(gameHistory) {
@@ -16,14 +16,14 @@ export function displayHistory(gameHistory) {
     });
 
   if (filteredHistory.length === 0) {
-    historyDiv.textContent = "まだ履歴はありません。";
+    historyDiv.textContent = "まだきろくがないよ。これからがんばろう！";
     return;
   }
 
   const table = document.createElement("table");
   table.classList.add("history-table");
   const headerRow = document.createElement("tr");
-  const headers = ["日付", "正解数", "問題数"];
+  const headers = ["ひづけ", "せいかい", "もんだい"];
   headers.forEach((headerText) => {
     const header = document.createElement("th");
     header.textContent = headerText;
@@ -73,7 +73,7 @@ export function displayMistakeNotebook(mistakes) {
   notebookDiv.innerHTML = "";
 
   if (mistakes.length === 0) {
-    notebookDiv.textContent = "まだ間違えた問題はありません。がんばっています！";
+    notebookDiv.textContent = "まだまちがえたもんだいはないよ。すごいね！";
     return;
   }
 
@@ -98,7 +98,7 @@ export function displayMistakeNotebook(mistakes) {
 
     const helpText = document.createElement("div");
     helpText.classList.add("mistake-help");
-    helpText.textContent = "3回つづけてせいかいすると、そつぎょうできるよ！";
+    helpText.textContent = "3かいつづけてせいかいすると、クリアだよ！";
     card.appendChild(helpText);
 
     container.appendChild(card);
@@ -157,12 +157,12 @@ export function displayCharacter(xp) {
 
     const progressText = document.createElement("div");
     progressText.classList.add("character-progress-text");
-    progressText.textContent = `つぎのレベルまで: あと ${progress.remainingXP} XP`;
+    progressText.textContent = `つぎまで: あと ${progress.remainingXP} ポイント`;
     container.appendChild(progressText);
   } else {
     const maxLevelText = document.createElement("div");
     maxLevelText.classList.add("character-max-level");
-    maxLevelText.textContent = "さいこうレベル！";
+    maxLevelText.textContent = "さいこう！";
     container.appendChild(maxLevelText);
   }
 

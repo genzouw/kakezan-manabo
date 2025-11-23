@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>掛け算学習アプリ</title>
+    <title>かけざん れんしゅう</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   </head>
@@ -19,11 +19,11 @@
 
     <div id="score"></div>
 
-    <h2>マイキャラクター</h2>
+    <h2>🐣 キャラクター</h2>
 
     <div id="character"></div>
 
-    <h2>学習統計</h2>
+    <h2>📊 がくしゅうきろく</h2>
 
     <div id="statistics">
       <div id="statisticsSummary"></div>
@@ -41,68 +41,68 @@
       </div>
     </div>
 
-    <h2>ごほうびカレンダー</h2>
+    <h2>📅 がんばりカレンダー</h2>
 
     <div id="reward-calendar"></div>
 
-    <h2>まちがいノート</h2>
+    <h2>📝 もういちどチャレンジ</h2>
 
     <div id="mistake-notebook"></div>
 
-    <h2>バッジコレクション</h2>
+    <h2>🏆 できたバッジ</h2>
 
     <div id="badges"></div>
 
-    <h2>ゲーム履歴</h2>
+    <h2>📖 これまでのきろく</h2>
 
     <div id="history"></div>
 
-    <h2>設定</h2>
+    <h2>⚙️ せってい</h2>
 
     <div id="settings">
-      <h3>学習モード</h3>
+      <h3>もんだいのモード</h3>
 
       <select id="learningMode">
-        <option value="normal">通常モード</option>
-        <option value="weak">苦手克服モード</option>
-        <option value="adaptive">アダプティブラーニング</option>
+        <option value="normal">ふつうモード</option>
+        <option value="weak">にがてもんだいモード</option>
+        <option value="adaptive">じぶんにあったモード</option>
       </select>
 
       <p class="mode-description">
-        <span id="modeDescription">ランダムに問題を出題します</span>
+        <span id="modeDescription">いろいろなもんだいがでるよ</span>
       </p>
 
-      <h3>問題の範囲</h3>
+      <h3>れんしゅうするだん</h3>
 
       <label
-        ><input type="checkbox" id="level1" value="1" checked /> 1の段</label
+        ><input type="checkbox" id="level1" value="1" checked /> 1のだん</label
       >
       <label
-        ><input type="checkbox" id="level2" value="2" checked /> 2の段</label
+        ><input type="checkbox" id="level2" value="2" checked /> 2のだん</label
       >
       <label
-        ><input type="checkbox" id="level3" value="3" checked /> 3の段</label
+        ><input type="checkbox" id="level3" value="3" checked /> 3のだん</label
       >
       <label
-        ><input type="checkbox" id="level4" value="4" checked /> 4の段</label
+        ><input type="checkbox" id="level4" value="4" checked /> 4のだん</label
       >
       <label
-        ><input type="checkbox" id="level5" value="5" checked /> 5の段</label
+        ><input type="checkbox" id="level5" value="5" checked /> 5のだん</label
       >
       <label
-        ><input type="checkbox" id="level6" value="6" checked /> 6の段</label
+        ><input type="checkbox" id="level6" value="6" checked /> 6のだん</label
       >
       <label
-        ><input type="checkbox" id="level7" value="7" checked /> 7の段</label
+        ><input type="checkbox" id="level7" value="7" checked /> 7のだん</label
       >
       <label
-        ><input type="checkbox" id="level8" value="8" checked /> 8の段</label
+        ><input type="checkbox" id="level8" value="8" checked /> 8のだん</label
       >
       <label
-        ><input type="checkbox" id="level9" value="9" checked /> 9の段</label
+        ><input type="checkbox" id="level9" value="9" checked /> 9のだん</label
       >
 
-      <h3>問題数</h3>
+      <h3>もんだいのかず</h3>
 
       <input type="number" id="questionCount" value="10" min="1" max="81" />
     </div>

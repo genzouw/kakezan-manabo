@@ -28,7 +28,7 @@ export function displayBadgeCollection() {
       <div class="badge-emoji">${isEarned ? badge.emoji : "🔒"}</div>
       <div class="badge-name">${badge.name}</div>
       <div class="badge-description">${badge.description}</div>
-      ${!isEarned ? '<div class="badge-locked-text">未獲得</div>' : ""}
+      ${!isEarned ? '<div class="badge-locked-text">まだゲットしてないよ</div>' : ""}
     `;
 
     container.appendChild(badgeElement);
@@ -38,23 +38,23 @@ export function displayBadgeCollection() {
   const statsElement = document.createElement("div");
   statsElement.className = "achievement-stats";
   statsElement.innerHTML = `
-    <h3>あなたの記録</h3>
+    <h3>きみのきろく</h3>
     <div class="stats-grid">
       <div class="stat-item">
         <div class="stat-value">${stats.gamesPlayed || 0}</div>
-        <div class="stat-label">プレイ回数</div>
+        <div class="stat-label">やったかず</div>
       </div>
       <div class="stat-item">
         <div class="stat-value">${stats.perfectGames || 0}</div>
-        <div class="stat-label">全問正解</div>
+        <div class="stat-label">ぜんぶせいかい</div>
       </div>
       <div class="stat-item">
         <div class="stat-value">${stats.maxStreak || 0}</div>
-        <div class="stat-label">最高連続正解</div>
+        <div class="stat-label">さいこうれんぞくせいかい</div>
       </div>
       <div class="stat-item">
         <div class="stat-value">${stats.consecutiveDays || 0}</div>
-        <div class="stat-label">連続学習日数</div>
+        <div class="stat-label">れんぞくがくしゅうにっすう</div>
       </div>
     </div>
   `;
