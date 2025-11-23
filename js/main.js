@@ -45,17 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const choices = generateChoices(correctAnswer);
     choiceButtons.forEach((button, index) => {
       button.textContent = choices[index];
-      button.onclick = () => checkAnswer(choices[index]);
+      button.onclick = (event) => checkAnswer(choices[index], event.target);
     });
   }
 
-  function checkAnswer(selectedAnswer) {
+  function checkAnswer(selectedAnswer, selectedButton) {
     choiceButtons.forEach((button) => {
       button.disabled = true;
     });
-    const selectedButton = Array.from(choiceButtons).find(
-      (button) => button.textContent == selectedAnswer,
-    );
     const correctAnswer = currentQuestion.answer;
     const correctAnswerButton = Array.from(choiceButtons).find(
       (button) => button.textContent == correctAnswer,
