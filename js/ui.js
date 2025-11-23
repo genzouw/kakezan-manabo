@@ -1,3 +1,5 @@
+import { getCurrentLevel, getProgressToNextLevel } from "./character.js";
+
 export function updateQuestionProgress(currentQuestionIndex) {
   const scoreDiv = document.getElementById("score");
   scoreDiv.textContent = `${currentQuestionIndex + 1} 問目`;
@@ -102,4 +104,126 @@ export function displayMistakeNotebook(mistakes) {
   });
 
   notebookDiv.appendChild(container);
+}
+
+/**
+ * キャラクターを表示
+ * @param {number} xp - 現在のXP
+ */
+export function displayCharacter(xp) {
+  const characterDiv = document.getElementById("character");
+  if (!characterDiv) {
+    return;
+  }
+
+  const currentLevel = getCurrentLevel(xp);
+  const progress = getProgressToNextLevel(xp);
+
+  characterDiv.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.classList.add("character-container");
+
+  // キャラクターの絵文字表示
+  const emojiDiv = document.createElement("div");
+  emojiDiv.classList.add("character-emoji");
+  emojiDiv.textContent = currentLevel.emoji;
+  container.appendChild(emojiDiv);
+
+  // レベル名表示
+  const nameDiv = document.createElement("div");
+  nameDiv.classList.add("character-name");
+  nameDiv.textContent = currentLevel.name;
+  container.appendChild(nameDiv);
+
+  // XP表示
+  const xpDiv = document.createElement("div");
+  xpDiv.classList.add("character-xp");
+  xpDiv.textContent = `XP: ${xp}`;
+  container.appendChild(xpDiv);
+
+  // 進捗バー
+  if (progress.nextLevel) {
+    const progressBar = document.createElement("div");
+    progressBar.classList.add("character-progress-bar");
+
+    const progressFill = document.createElement("div");
+    progressFill.classList.add("character-progress-fill");
+    progressFill.style.width = `${progress.progress}%`;
+    progressBar.appendChild(progressFill);
+
+    container.appendChild(progressBar);
+
+    const progressText = document.createElement("div");
+    progressText.classList.add("character-progress-text");
+    progressText.textContent = `つぎのレベルまで: あと ${progress.remainingXP} XP`;
+    container.appendChild(progressText);
+  } else {
+    const maxLevelText = document.createElement("div");
+    maxLevelText.classList.add("character-max-level");
+    maxLevelText.textContent = "さいこうレベル！";
+    container.appendChild(maxLevelText);
+  }
+
+  characterDiv.appendChild(container);
+}
+
+/**
+ * レベルアップモーダルを表示
+ * @param {Object} newLevel - 新しいレベル情報
+ */
+export function showLevelUpModal(newLevel) {
+  // 既存のモーダルを削除
+  const existingModal = document.getElementById("levelup-modal");
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  const modal = document.createElement("div");
+  modal.id = "levelup-modal";
+  modal.classList.add("modal");
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content", "levelup-content");
+
+  const title = document.createElement("h2");
+  title.textContent = "🎉 レベルアップ！";
+  modalContent.appendChild(title);
+
+  const emoji = document.createElement("div");
+  emoji.classList.add("levelup-emoji");
+  emoji.textContent = newLevel.emoji;
+  modalContent.appendChild(emoji);
+
+  const levelName = document.createElement("div");
+  levelName.classList.add("levelup-name");
+  levelName.textContent = newLevel.name;
+  modalContent.appendChild(levelName);
+
+  const message = document.createElement("div");
+  message.classList.add("levelup-message");
+  message.textContent = newLevel.message;
+  modalContent.appendChild(message);
+
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "やったね！";
+  closeButton.classList.add("modal-close-btn");
+  modalContent.appendChild(closeButton);
+
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+
+  // 3秒後に自動的に閉じる
+  const MODAL_AUTO_CLOSE_DELAY_MS = 3000;
+  const timeoutId = setTimeout(() => {
+    if (modal.parentNode) {
+      modal.remove();
+    }
+  }, MODAL_AUTO_CLOSE_DELAY_MS);
+
+  // 閉じるボタンの処理
+  closeButton.onclick = () => {
+    clearTimeout(timeoutId);
+    modal.remove();
+  };
 }
