@@ -5,10 +5,12 @@
 body {
   font-family: sans-serif;
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   margin: 0;
   overflow-x: hidden;
   max-width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -16,6 +18,10 @@ h2 {
   background-color: #f0f0f0;
   border-radius: 0.5em;
   border-bottom: 1px solid #ccc;
+  max-width: 100%;
+  word-wrap: break-word;
+  padding: 10px;
+  margin: 10px 0;
 }
 
 h3 {
@@ -59,6 +65,8 @@ h3 {
 #history {
   text-align: left;
   margin-top: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .history-table {
@@ -300,6 +308,8 @@ h3 {
 #statistics {
   text-align: left;
   margin-top: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .summary-cards {
@@ -383,6 +393,8 @@ h3 {
 #mistake-notebook {
   text-align: left;
   margin-top: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .mistake-cards {
@@ -433,15 +445,19 @@ h3 {
 #character {
   text-align: center;
   margin: 20px 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .character-container {
   background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
   border-radius: 15px;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: min(400px, 100%);
+  max-width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .character-emoji {
@@ -586,6 +602,7 @@ h3 {
   margin-top: 20px;
   max-width: 100%;
   overflow-x: hidden;
+  padding: 0;
 }
 
 .calendar-streak {
@@ -788,6 +805,10 @@ h3 {
 }
 
 @media (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+
   #question {
     font-size: 2.5em;
   }
@@ -795,6 +816,11 @@ h3 {
   .choice-btn {
     font-size: 1.8em;
     max-width: calc(50% - 5px);
+  }
+
+  .character-container {
+    padding: 15px;
+    border-radius: 10px;
   }
 
   .summary-cards {
@@ -865,5 +891,42 @@ h3 {
 
   .charts-container {
     grid-template-columns: 1fr;
+  }
+}
+
+/* 超狭い画面（Pixel 7など）向け */
+@media (max-width: 420px) {
+  body {
+    padding: 5px;
+  }
+
+  h2 {
+    padding: 8px;
+    font-size: 1.2em;
+  }
+
+  .character-container {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .character-emoji {
+    font-size: 3em;
+  }
+
+  .calendar-streak {
+    padding: 8px;
+    font-size: 1em;
+  }
+
+  .mistake-cards,
+  .badge-collection {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+    gap: 8px;
+  }
+
+  .mistake-card,
+  .badge-card {
+    padding: 8px;
   }
 }
