@@ -158,3 +158,79 @@ export function addCharacterXP(amount) {
   saveCharacterXP(newXP);
   return newXP;
 }
+
+/**
+ * 学習カレンダーを読み込み
+ * @returns {Object} 日付をキー、学習回数を値とするオブジェクト
+ */
+export function loadCalendar() {
+  const storedCalendar = localStorage.getItem("learningCalendar");
+  if (storedCalendar) {
+    try {
+      return JSON.parse(storedCalendar);
+    } catch (e) {
+      return {};
+    }
+  }
+  return {};
+}
+
+/**
+ * 学習カレンダーを保存
+ * @param {Object} calendar - 日付をキー、学習回数を値とするオブジェクト
+ */
+export function saveCalendar(calendar) {
+  localStorage.setItem("learningCalendar", JSON.stringify(calendar));
+}
+
+/**
+ * 日付をキー文字列にフォーマット
+ * @param {Date} date - 日付オブジェクト
+ * @returns {string} YYYY-MM-DD形式の日付キー
+ */
+function formatDateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * 今日の学習を記録
+ */
+export function recordTodayStudy() {
+  const today = new Date();
+  const dateKey = formatDateKey(today);
+
+  const calendar = loadCalendar();
+  if (!calendar[dateKey]) {
+    calendar[dateKey] = 0;
+  }
+  calendar[dateKey] += 1;
+  saveCalendar(calendar);
+}
+
+/**
+ * 連続学習日数を計算
+ * @returns {number} 連続学習日数
+ */
+export function getCurrentStreak() {
+  const calendar = loadCalendar();
+  const today = new Date();
+  let streak = 0;
+
+  // 今日から過去に向かって連続チェック
+  for (let i = 0; i < 365; i++) {
+    const checkDate = new Date(today);
+    checkDate.setDate(today.getDate() - i);
+    const dateKey = formatDateKey(checkDate);
+
+    if (calendar[dateKey] && calendar[dateKey] > 0) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
