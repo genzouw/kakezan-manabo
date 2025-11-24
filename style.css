@@ -1103,6 +1103,45 @@ h3 {
    設定ページ - カード型レイアウト
    ======================================== */
 
+/* 段ごとのカラーパレット（パステルカラー） */
+:root {
+  --color-dan-1: #ffebee;
+  --color-dan-1-border: #ffcdd2;
+  --color-dan-1-hover: #ef9a9a;
+
+  --color-dan-2: #fff3e0;
+  --color-dan-2-border: #ffe0b2;
+  --color-dan-2-hover: #ffb74d;
+
+  --color-dan-3: #fffde7;
+  --color-dan-3-border: #fff9c4;
+  --color-dan-3-hover: #fff176;
+
+  --color-dan-4: #e8f5e9;
+  --color-dan-4-border: #c8e6c9;
+  --color-dan-4-hover: #81c784;
+
+  --color-dan-5: #e3f2fd;
+  --color-dan-5-border: #bbdefb;
+  --color-dan-5-hover: #64b5f6;
+
+  --color-dan-6: #f3e5f5;
+  --color-dan-6-border: #e1bee7;
+  --color-dan-6-hover: #ba68c8;
+
+  --color-dan-7: #fce4ec;
+  --color-dan-7-border: #f8bbd0;
+  --color-dan-7-hover: #f06292;
+
+  --color-dan-8: #e0f7fa;
+  --color-dan-8-border: #b2ebf2;
+  --color-dan-8-hover: #4dd0e1;
+
+  --color-dan-9: #f1f8e9;
+  --color-dan-9-border: #dcedc8;
+  --color-dan-9-hover: #aed581;
+}
+
 .settings-container {
   display: flex;
   flex-direction: column;
@@ -1193,6 +1232,88 @@ h3 {
 .level-checkbox:hover {
   background: #e8eaf6;
   border-color: #667eea;
+}
+
+/* 段ごとのカラーコーディング */
+.level-checkbox[data-level="1"] {
+  background: var(--color-dan-1);
+  border-color: var(--color-dan-1-border);
+}
+
+.level-checkbox[data-level="1"]:hover {
+  border-color: var(--color-dan-1-hover);
+}
+
+.level-checkbox[data-level="2"] {
+  background: var(--color-dan-2);
+  border-color: var(--color-dan-2-border);
+}
+
+.level-checkbox[data-level="2"]:hover {
+  border-color: var(--color-dan-2-hover);
+}
+
+.level-checkbox[data-level="3"] {
+  background: var(--color-dan-3);
+  border-color: var(--color-dan-3-border);
+}
+
+.level-checkbox[data-level="3"]:hover {
+  border-color: var(--color-dan-3-hover);
+}
+
+.level-checkbox[data-level="4"] {
+  background: var(--color-dan-4);
+  border-color: var(--color-dan-4-border);
+}
+
+.level-checkbox[data-level="4"]:hover {
+  border-color: var(--color-dan-4-hover);
+}
+
+.level-checkbox[data-level="5"] {
+  background: var(--color-dan-5);
+  border-color: var(--color-dan-5-border);
+}
+
+.level-checkbox[data-level="5"]:hover {
+  border-color: var(--color-dan-5-hover);
+}
+
+.level-checkbox[data-level="6"] {
+  background: var(--color-dan-6);
+  border-color: var(--color-dan-6-border);
+}
+
+.level-checkbox[data-level="6"]:hover {
+  border-color: var(--color-dan-6-hover);
+}
+
+.level-checkbox[data-level="7"] {
+  background: var(--color-dan-7);
+  border-color: var(--color-dan-7-border);
+}
+
+.level-checkbox[data-level="7"]:hover {
+  border-color: var(--color-dan-7-hover);
+}
+
+.level-checkbox[data-level="8"] {
+  background: var(--color-dan-8);
+  border-color: var(--color-dan-8-border);
+}
+
+.level-checkbox[data-level="8"]:hover {
+  border-color: var(--color-dan-8-hover);
+}
+
+.level-checkbox[data-level="9"] {
+  background: var(--color-dan-9);
+  border-color: var(--color-dan-9-border);
+}
+
+.level-checkbox[data-level="9"]:hover {
+  border-color: var(--color-dan-9-hover);
 }
 
 .level-checkbox input[type="checkbox"] {
