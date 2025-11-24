@@ -1213,7 +1213,7 @@ h3 {
 
 .level-checkbox span {
   font-size: 1.05em;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 /* 問題数入力 */
