@@ -80,30 +80,48 @@
     <!-- せっていページ -->
     <div id="settings-content" class="page-content">
       <h2>⚙️ せってい</h2>
-      <div id="settings">
-        <h3>もんだいのモード</h3>
-        <select id="learningMode">
-          <option value="normal">ふつうモード</option>
-          <option value="weak">にがてもんだいモード</option>
-          <option value="adaptive">じぶんにあったモード</option>
-        </select>
-        <p class="mode-description">
-          <span id="modeDescription">いろいろなもんだいがでるよ</span>
-        </p>
+      <div id="settings" class="settings-container">
+        <!-- モード設定カード -->
+        <div class="setting-card">
+          <h3 class="setting-card-title">📚 もんだいのモード</h3>
+          <div class="setting-card-content">
+            <select id="learningMode" class="mode-select">
+              <option value="normal">ふつうモード</option>
+              <option value="weak">にがてもんだいモード</option>
+              <option value="adaptive">じぶんにあったモード</option>
+            </select>
+            <p class="mode-description">
+              <span id="modeDescription">いろいろなもんだいがでるよ</span>
+            </p>
+          </div>
+        </div>
 
-        <h3>れんしゅうするだん</h3>
-        <label><input type="checkbox" id="level1" value="1" checked /> 1のだん</label>
-        <label><input type="checkbox" id="level2" value="2" checked /> 2のだん</label>
-        <label><input type="checkbox" id="level3" value="3" checked /> 3のだん</label>
-        <label><input type="checkbox" id="level4" value="4" checked /> 4のだん</label>
-        <label><input type="checkbox" id="level5" value="5" checked /> 5のだん</label>
-        <label><input type="checkbox" id="level6" value="6" checked /> 6のだん</label>
-        <label><input type="checkbox" id="level7" value="7" checked /> 7のだん</label>
-        <label><input type="checkbox" id="level8" value="8" checked /> 8のだん</label>
-        <label><input type="checkbox" id="level9" value="9" checked /> 9のだん</label>
+        <!-- 段選択カード -->
+        <div class="setting-card">
+          <h3 class="setting-card-title">🔢 れんしゅうするだん</h3>
+          <div class="setting-card-content">
+            <div class="level-selection-grid">
+              <label class="level-checkbox"><input type="checkbox" id="level1" value="1" checked /> <span>1のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level2" value="2" checked /> <span>2のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level3" value="3" checked /> <span>3のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level4" value="4" checked /> <span>4のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level5" value="5" checked /> <span>5のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level6" value="6" checked /> <span>6のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level7" value="7" checked /> <span>7のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level8" value="8" checked /> <span>8のだん</span></label>
+              <label class="level-checkbox"><input type="checkbox" id="level9" value="9" checked /> <span>9のだん</span></label>
+            </div>
+          </div>
+        </div>
 
-        <h3>もんだいのかず</h3>
-        <input type="number" id="questionCount" value="10" min="1" max="81" />
+        <!-- 問題数カード -->
+        <div class="setting-card">
+          <h3 class="setting-card-title">📝 もんだいのかず</h3>
+          <div class="setting-card-content">
+            <input type="number" id="questionCount" class="question-count-input" value="10" min="1" max="81" />
+            <p class="setting-hint">1〜81もんまでえらべるよ</p>
+          </div>
+        </div>
       </div>
     </div>
 
