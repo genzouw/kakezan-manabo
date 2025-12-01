@@ -60,3 +60,20 @@ export function playIncorrectSound() {
   const incorrectSound = new Audio("incorrect.mp3");
   incorrectSound.play();
 }
+
+/**
+ * 問題と答えをセットで読み上げる
+ * @param {string} questionReading - 問題の読み方
+ * @param {string} answerReading - 答えの読み方
+ */
+export async function speakQuestionAndAnswer(questionReading, answerReading) {
+  if (voices.length === 0) {
+    await loadVoices();
+  }
+  return new Promise((resolve) => {
+    const combinedText = `${questionReading}${answerReading}`;
+    const utterance = createUtterance(combinedText);
+    utterance.onend = resolve;
+    speechSynthesis.speak(utterance);
+  });
+}

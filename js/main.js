@@ -2,6 +2,7 @@ import { generateMultiplicationQuestion, generateChoices } from "./logic.js";
 import {
   speakQuestion,
   speakAnswer,
+  speakQuestionAndAnswer,
   playCorrectSound,
   playIncorrectSound,
 } from "./audio.js";
@@ -102,6 +103,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isCorrect) {
       correctAnswers++;
       playCorrectSound();
+      // 正解時も問題と答えをセットで読み上げる
+      speakQuestionAndAnswer(currentQuestion.reading, currentQuestion.answerReading);
       // 正解時に連続正解カウントを更新（間違いノートに登録されている場合）
       updateCorrectStreak(currentQuestion.questionKey);
 
@@ -123,7 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       selectedButton.style.backgroundColor = "pink";
       playIncorrectSound();
-      speakAnswer(currentQuestion.answerReading);
+      // 不正解時も問題と答えをセットで読み上げる
+      speakQuestionAndAnswer(currentQuestion.reading, currentQuestion.answerReading);
       // 不正解時に間違いノートに記録
       recordMistake(currentQuestion.questionKey);
     }
