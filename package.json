@@ -7,8 +7,7 @@
   "scripts": {
     "start": "http-server -p 8000 -c-1 -o",
     "dev": "http-server -p 8000 -c-1",
-    "lint": "eslint js/",
-    "lint:complexity": "eslint js/ --rule 'complexity: [error, {max: 10}]'"
+    "lint": "eslint js/"
   },
   "keywords": [
     "education",
