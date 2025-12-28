@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "http-server -p 8000 -c-1 -o",
-    "dev": "http-server -p 8000 -c-1"
+    "dev": "http-server -p 8000 -c-1",
+    "lint": "eslint js/",
+    "lint:complexity": "eslint js/ --rule 'complexity: [error, {max: 10}]'"
   },
   "keywords": [
     "education",
@@ -17,6 +19,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0",
     "http-server": "^14.1.1"
   }
 }
