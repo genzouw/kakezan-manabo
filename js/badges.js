@@ -108,64 +108,99 @@ function saveAchievementStats(stats) {
 }
 
 /**
+ * practicesLevelsフィールドをSet型に正規化
+ * @param {Object} stats - 統計オブジェクト
+ * @returns {Set} 正規化されたSet
+ */
+function normalizePracticesLevels(practicesLevels) {
+  if (Array.isArray(practicesLevels)) {
+    return new Set(practicesLevels);
+  }
+  if (!practicesLevels) {
+    return new Set();
+  }
+  return practicesLevels;
+}
+
+/**
+ * 連続学習日数を計算
+ * @param {string|null} lastPlayDate - 最後にプレイした日付
+ * @param {number} currentConsecutiveDays - 現在の連続日数
+ * @returns {number} 更新された連続日数
+ */
+function calculateConsecutiveDays(lastPlayDate, currentConsecutiveDays) {
+  const today = new Date().toDateString();
+  if (!lastPlayDate) {
+    return 1;
+  }
+  const lastDate = new Date(lastPlayDate);
+  const diffTime = new Date(today) - lastDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 1) {
+    return currentConsecutiveDays + 1;
+  }
+  if (diffDays > 1) {
+    return 1;
+  }
+  return currentConsecutiveDays;
+}
+
+/**
+ * 練習した段を記録
+ * @param {Set} practicesLevels - 練習済み段のSet
+ * @param {Array} questions - 問題キーの配列
+ */
+function recordPracticedLevels(practicesLevels, questions) {
+  if (!questions || questions.length === 0) {
+    return;
+  }
+  questions.forEach((questionKey) => {
+    const level = parseInt(questionKey.split("x")[0]);
+    practicesLevels.add(level);
+  });
+}
+
+/**
+ * スピード記録を達成したか判定
+ * @param {Object} gameResult - ゲーム結果
+ * @returns {boolean} スピード記録を達成した場合true
+ */
+function hasAchievedSpeedRecord(gameResult) {
+  const SPEED_RECORD_QUESTIONS = 10;
+  const SPEED_RECORD_TIME_MS = 120000;
+  return (
+    gameResult.totalQuestions === SPEED_RECORD_QUESTIONS &&
+    gameResult.duration &&
+    gameResult.duration <= SPEED_RECORD_TIME_MS
+  );
+}
+
+/**
  * ゲーム終了時に統計を更新
  * @param {Object} gameResult - ゲーム結果
  */
 export function updateAchievementStats(gameResult) {
-  let stats = getAchievementStats();
+  const stats = getAchievementStats();
+  stats.practicesLevels = normalizePracticesLevels(stats.practicesLevels);
 
-  // 配列からSetに変換
-  if (Array.isArray(stats.practicesLevels)) {
-    stats.practicesLevels = new Set(stats.practicesLevels);
-  } else if (!stats.practicesLevels) {
-    stats.practicesLevels = new Set();
-  }
-
-  // ゲーム数をカウント
   stats.gamesPlayed++;
+  stats.totalQuestions += gameResult.totalQuestions;
 
-  // 全問正解チェック
   if (gameResult.correctAnswers === gameResult.totalQuestions) {
     stats.perfectGames++;
   }
 
-  // 問題数を累計
-  stats.totalQuestions += gameResult.totalQuestions;
+  stats.consecutiveDays = calculateConsecutiveDays(
+    stats.lastPlayDate,
+    stats.consecutiveDays
+  );
+  stats.lastPlayDate = new Date().toDateString();
 
-  // 連続学習日数を更新
-  const today = new Date().toDateString();
-  if (stats.lastPlayDate) {
-    const lastDate = new Date(stats.lastPlayDate);
-    const diffTime = new Date(today) - lastDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 1) {
-      stats.consecutiveDays++;
-    } else if (diffDays > 1) {
-      stats.consecutiveDays = 1;
-    }
-  } else {
-    stats.consecutiveDays = 1;
-  }
-  stats.lastPlayDate = today;
-
-  // 練習した段を記録
-  if (gameResult.questions && gameResult.questions.length > 0) {
-    gameResult.questions.forEach((questionKey) => {
-      const level = parseInt(questionKey.split("x")[0]);
-      stats.practicesLevels.add(level);
-    });
-  }
-
-  // 全ての段を練習したかチェック
+  recordPracticedLevels(stats.practicesLevels, gameResult.questions);
   stats.practiceAllLevels = stats.practicesLevels.size >= 9;
 
-  // スピード記録チェック（10問を2分以内）
-  if (
-    gameResult.totalQuestions === 10 &&
-    gameResult.duration &&
-    gameResult.duration <= 120000
-  ) {
+  if (hasAchievedSpeedRecord(gameResult)) {
     stats.hasSpeedRecord = true;
   }
 
