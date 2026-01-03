@@ -1,0 +1,59 @@
+name: Deploy to S3 and Invalidate CloudFront
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ap-northeast-1
+  S3_BUCKET: genzouw-static-content
+  S3_PREFIX: kakezan
+  CLOUDFRONT_DISTRIBUTION_ID: E6OM0XCJX1HGU
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          # Static assets with long cache
+          aws s3 sync . s3://${S3_BUCKET}/${S3_PREFIX}/ \
+            --delete \
+            --cache-control "max-age=31536000,public" \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".gitignore" \
+            --exclude "node_modules/*" \
+            --exclude "package*.json" \
+            --exclude "eslint.config.js" \
+            --exclude "*.md" \
+            --exclude ".serena/*" \
+            --exclude ".DS_Store" \
+            --exclude "*.html"
+
+          # HTML files with no cache
+          aws s3 sync . s3://${S3_BUCKET}/${S3_PREFIX}/ \
+            --cache-control "max-age=0,no-cache,no-store,must-revalidate" \
+            --exclude "*" \
+            --include "*.html"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --paths "/${S3_PREFIX}/*"
