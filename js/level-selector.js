@@ -27,7 +27,9 @@ export function renderLevelCheckboxes() {
 }
 
 /**
- * 1段分のチェックボックス要素を template から生成する（内部利用）
+ * 1段分のチェックボックス要素を template から生成する（内部利用）。
+ * 前提: template には `.level-checkbox` / `input[type="checkbox"]` / `span`
+ * の各要素が必ず含まれていること（index.html の <template> と契約済み）。
  * @param {HTMLTemplateElement} template
  * @param {{ id: number, label: string }} level
  * @returns {DocumentFragment}
