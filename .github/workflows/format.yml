@@ -1,0 +1,40 @@
+name: format
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: format-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  prettier:
+    name: prettier --check
+    runs-on: ubuntu-latest
+    # 既存ファイルの一括整形が完了するまでは赤検知にしない。
+    # 整形完了後 (Issue #36 PR-2 マージ後) に continue-on-error を外す。
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.0.0
+        with:
+          # ESLint v10 等が要求する最低 Node バージョンに合わせて明示化
+          node-version: '20.19'
+          cache: 'npm'
+
+      - name: Install dependencies
+        # フォーマット検査は postinstall を必要としない
+        run: npm ci --ignore-scripts
+
+      - name: Run prettier --check
+        run: npm run format:check

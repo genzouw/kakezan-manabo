@@ -7,7 +7,10 @@
   "scripts": {
     "start": "http-server -p 8000 -c-1 -o",
     "dev": "http-server -p 8000 -c-1",
-    "lint": "eslint js/"
+    "lint": "eslint js/",
+    "lint:fix": "eslint --fix js/",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "education",
@@ -20,7 +23,9 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
     "globals": "^17.6.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "prettier": "^3.8.3"
   }
 }

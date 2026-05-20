@@ -73,6 +73,25 @@ kakezan-manabo/
 └── README.md           # このファイル
 ```
 
+## 開発: コードフォーマット
+
+本プロジェクトは [Prettier](https://prettier.io/) でフォーマット規約を管理しています。
+設定は `.prettierrc.json`、除外パスは `.prettierignore` を参照してください。
+
+```bash
+# フォーマットを適用
+npm run format
+
+# フォーマット違反の有無をチェック（CI と同じ動作）
+npm run format:check
+
+# ESLint の自動修正
+npm run lint:fix
+```
+
+PR を出す前に `npm run format` と `npm run lint:fix` を実行することを推奨します。
+CI の format check で違反が見つかった場合はマージできません。
+
 ## ライセンス
 
 MIT
