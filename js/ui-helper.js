@@ -3,21 +3,21 @@
  */
 
 const MODE_DESCRIPTIONS = {
-  normal: 'いろいろなもんだいがでるよ',
-  weak: 'にがてなもんだいをたくさんれんしゅうするよ',
-  adaptive: 'きみにぴったりのもんだいがでるよ',
+  normal: "いろいろなもんだいがでるよ",
+  weak: "にがてなもんだいをたくさんれんしゅうするよ",
+  adaptive: "きみにぴったりのもんだいがでるよ",
 };
 
 /**
  * 学習モードの説明文を更新
  */
 export function updateModeDescription() {
-  const modeSelect = document.getElementById('learningMode');
-  const descriptionSpan = document.getElementById('modeDescription');
+  const modeSelect = document.getElementById("learningMode");
+  const descriptionSpan = document.getElementById("modeDescription");
 
   if (modeSelect && descriptionSpan) {
     const selectedMode = modeSelect.value;
-    descriptionSpan.textContent = MODE_DESCRIPTIONS[selectedMode] || '';
+    descriptionSpan.textContent = MODE_DESCRIPTIONS[selectedMode] || "";
   }
 }
 
@@ -36,12 +36,12 @@ export function applySettingsToDOM(settings) {
       });
   }
 
-  const questionCountInput = document.getElementById('questionCount');
+  const questionCountInput = document.getElementById("questionCount");
   if (questionCountInput) {
     questionCountInput.value = String(settings.questionCount);
   }
 
-  const modeSelect = document.getElementById('learningMode');
+  const modeSelect = document.getElementById("learningMode");
   if (modeSelect) {
     modeSelect.value = settings.learningMode;
   }
@@ -56,13 +56,18 @@ export function readSettingsFromDOM() {
     document.querySelectorAll('#settings input[type="checkbox"]:checked'),
   ).map((checkbox) => parseInt(checkbox.value));
 
-  const questionCountInput = document.getElementById('questionCount');
-  const questionCount = questionCountInput
-    ? parseInt(questionCountInput.value)
-    : 10;
+  const questionCountInput = document.getElementById("questionCount");
+  const parsedQuestionCount = Number.parseInt(
+    questionCountInput?.value ?? "",
+    10,
+  );
+  const questionCount =
+    Number.isFinite(parsedQuestionCount) && parsedQuestionCount > 0
+      ? parsedQuestionCount
+      : 10;
 
-  const modeSelect = document.getElementById('learningMode');
-  const learningMode = modeSelect ? modeSelect.value : 'normal';
+  const modeSelect = document.getElementById("learningMode");
+  const learningMode = modeSelect ? modeSelect.value : "normal";
 
   return { selectedLevels, questionCount, learningMode };
 }
