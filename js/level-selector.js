@@ -30,7 +30,7 @@ export function renderLevelCheckboxes() {
  * 1段分のチェックボックス要素を template から生成する（内部利用）
  * @param {HTMLTemplateElement} template
  * @param {{ id: number }} level
- * @returns {HTMLElement}
+ * @returns {DocumentFragment}
  */
 function createLevelCheckbox(template, level) {
   const node = template.content.cloneNode(true);
