@@ -29,7 +29,7 @@ export function renderLevelCheckboxes() {
 /**
  * 1段分のチェックボックス要素を template から生成する（内部利用）
  * @param {HTMLTemplateElement} template
- * @param {{ id: number }} level
+ * @param {{ id: number, label: string }} level
  * @returns {DocumentFragment}
  */
 function createLevelCheckbox(template, level) {
@@ -43,7 +43,7 @@ function createLevelCheckbox(template, level) {
   input.value = String(level.id);
 
   const span = node.querySelector('span');
-  span.textContent = `${level.id}のだん`;
+  span.textContent = level.label;
 
   return node;
 }
