@@ -36,7 +36,7 @@ function createLevelCheckbox(template, level) {
   const node = template.content.cloneNode(true);
 
   const label = node.querySelector('.level-checkbox');
-  label.setAttribute('data-level', String(level.id));
+  label.dataset.level = String(level.id);
 
   const input = node.querySelector('input[type="checkbox"]');
   input.id = `level${level.id}`;
