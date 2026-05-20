@@ -10,9 +10,9 @@
  * @returns {Settings}
  */
 export function loadSettings() {
-  const storedLevels = localStorage.getItem("selectedLevels");
-  const storedQuestionCount = localStorage.getItem("questionCount");
-  const storedMode = localStorage.getItem("learningMode");
+  const storedLevels = localStorage.getItem('selectedLevels');
+  const storedQuestionCount = localStorage.getItem('questionCount');
+  const storedMode = localStorage.getItem('learningMode');
 
   let selectedLevels = null;
   if (storedLevels) {
@@ -24,7 +24,7 @@ export function loadSettings() {
     }
   }
 
-  const parsedQuestionCount = Number.parseInt(storedQuestionCount ?? "", 10);
+  const parsedQuestionCount = Number.parseInt(storedQuestionCount ?? '', 10);
   const questionCount =
     Number.isFinite(parsedQuestionCount) && parsedQuestionCount > 0
       ? parsedQuestionCount
@@ -33,7 +33,7 @@ export function loadSettings() {
   return {
     selectedLevels,
     questionCount,
-    learningMode: storedMode || "normal",
+    learningMode: storedMode || 'normal',
   };
 }
 
@@ -44,16 +44,18 @@ export function loadSettings() {
 export function saveSettings(settings) {
   if (settings.selectedLevels) {
     localStorage.setItem(
-      "selectedLevels",
+      'selectedLevels',
       JSON.stringify(settings.selectedLevels),
     );
+  } else if (settings.selectedLevels === null) {
+    localStorage.removeItem('selectedLevels');
   }
-  localStorage.setItem("questionCount", String(settings.questionCount));
-  localStorage.setItem("learningMode", settings.learningMode);
+  localStorage.setItem('questionCount', String(settings.questionCount));
+  localStorage.setItem('learningMode', settings.learningMode);
 }
 
 export function loadHistory() {
-  const storedHistory = localStorage.getItem("gameHistory");
+  const storedHistory = localStorage.getItem('gameHistory');
   if (storedHistory) {
     try {
       return JSON.parse(storedHistory);
@@ -65,7 +67,7 @@ export function loadHistory() {
 }
 
 export function saveHistory(gameHistory) {
-  localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
+  localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
 }
 
 /**
@@ -73,7 +75,7 @@ export function saveHistory(gameHistory) {
  * @returns {Array<{questionKey: string, consecutiveCorrect: number}>}
  */
 export function loadMistakes() {
-  const storedMistakes = localStorage.getItem("mistakes");
+  const storedMistakes = localStorage.getItem('mistakes');
   if (storedMistakes) {
     try {
       return JSON.parse(storedMistakes);
@@ -89,7 +91,7 @@ export function loadMistakes() {
  * @param {Array<{questionKey: string, consecutiveCorrect: number}>} mistakes
  */
 export function saveMistakes(mistakes) {
-  localStorage.setItem("mistakes", JSON.stringify(mistakes));
+  localStorage.setItem('mistakes', JSON.stringify(mistakes));
 }
 
 /**
@@ -139,7 +141,7 @@ export function updateCorrectStreak(questionKey) {
  * @returns {number} 現在のXP
  */
 export function loadCharacterXP() {
-  const storedXP = localStorage.getItem("characterXP");
+  const storedXP = localStorage.getItem('characterXP');
   return storedXP ? parseInt(storedXP) : 0;
 }
 
@@ -148,7 +150,7 @@ export function loadCharacterXP() {
  * @param {number} xp - 新しいXP
  */
 export function saveCharacterXP(xp) {
-  localStorage.setItem("characterXP", xp.toString());
+  localStorage.setItem('characterXP', xp.toString());
 }
 
 /**
@@ -168,7 +170,7 @@ export function addCharacterXP(amount) {
  * @returns {Object} 日付をキー、学習回数を値とするオブジェクト
  */
 export function loadCalendar() {
-  const storedCalendar = localStorage.getItem("learningCalendar");
+  const storedCalendar = localStorage.getItem('learningCalendar');
   if (storedCalendar) {
     try {
       return JSON.parse(storedCalendar);
@@ -184,7 +186,7 @@ export function loadCalendar() {
  * @param {Object} calendar - 日付をキー、学習回数を値とするオブジェクト
  */
 export function saveCalendar(calendar) {
-  localStorage.setItem("learningCalendar", JSON.stringify(calendar));
+  localStorage.setItem('learningCalendar', JSON.stringify(calendar));
 }
 
 /**
@@ -194,8 +196,8 @@ export function saveCalendar(calendar) {
  */
 function formatDateKey(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
