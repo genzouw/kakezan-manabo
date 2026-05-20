@@ -42,6 +42,7 @@ import { displayBadgeCollection } from './badge-display.js';
 import { updateAllCharts } from './charts.js';
 import { MenuManager } from './menu.js';
 import { calculateXP, hasLeveledUp, getCurrentLevel } from './character.js';
+import { renderLevelCheckboxes } from './level-selector.js';
 
 // レベルアップモーダル表示の遅延時間（ミリ秒）
 const LEVEL_UP_MODAL_DELAY_MS = 2500;
@@ -51,6 +52,10 @@ let learningMode = 'normal';
 let selectedLevels = null;
 
 document.addEventListener('DOMContentLoaded', function () {
+  // 段選択チェックボックスを最初に動的生成
+  // （後段の loadSettings → applySettingsToDOM が要素の存在を前提とするため）
+  renderLevelCheckboxes();
+
   // メニューマネージャーを初期化
   const menuManager = new MenuManager();
 
