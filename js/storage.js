@@ -1,55 +1,43 @@
+/**
+ * @typedef {Object} Settings
+ * @property {number[]|null} selectedLevels - 選択中の段（null時はDOMに反映しない）
+ * @property {number} questionCount - 出題数
+ * @property {string} learningMode - 学習モード ("normal" | "weak" | "adaptive")
+ */
+
+/**
+ * 設定をlocalStorageから読み込む（純粋なデータ取得関数）
+ * @returns {Settings}
+ */
 export function loadSettings() {
-  const storedLevels = localStorage.getItem("selectedLevels");
-  if (storedLevels) {
-    const selectedLevels = JSON.parse(storedLevels);
-    document
-      .querySelectorAll('#settings input[type="checkbox"]')
-      .forEach((checkbox) => {
-        checkbox.checked = selectedLevels.includes(parseInt(checkbox.value));
-      });
-  }
-
-  const storedQuestionCount = localStorage.getItem("questionCount");
-  if (storedQuestionCount) {
-    document.getElementById("questionCount").value = storedQuestionCount;
-  }
-
-  const storedMode = localStorage.getItem("learningMode");
-  if (storedMode) {
-    const modeSelect = document.getElementById("learningMode");
-    if (modeSelect) {
-      modeSelect.value = storedMode;
-    }
-  }
+  const storedLevels = localStorage.getItem('selectedLevels');
+  const storedQuestionCount = localStorage.getItem('questionCount');
+  const storedMode = localStorage.getItem('learningMode');
 
   return {
+    selectedLevels: storedLevels ? JSON.parse(storedLevels) : null,
     questionCount: storedQuestionCount ? parseInt(storedQuestionCount) : 10,
-    learningMode: storedMode || "normal",
+    learningMode: storedMode || 'normal',
   };
 }
 
-export function saveSettings() {
-  const selectedLevels = Array.from(
-    document.querySelectorAll('#settings input[type="checkbox"]:checked'),
-  ).map((checkbox) => parseInt(checkbox.value));
-  localStorage.setItem("selectedLevels", JSON.stringify(selectedLevels));
-
-  const questionCount = document.getElementById("questionCount").value;
-  localStorage.setItem("questionCount", questionCount);
-
-  const modeSelect = document.getElementById("learningMode");
-  if (modeSelect) {
-    localStorage.setItem("learningMode", modeSelect.value);
+/**
+ * 設定をlocalStorageへ保存する（純粋なデータ保存関数）
+ * @param {Settings} settings
+ */
+export function saveSettings(settings) {
+  if (settings.selectedLevels) {
+    localStorage.setItem(
+      'selectedLevels',
+      JSON.stringify(settings.selectedLevels),
+    );
   }
-
-  return {
-    questionCount: parseInt(questionCount),
-    learningMode: modeSelect ? modeSelect.value : "normal",
-  };
+  localStorage.setItem('questionCount', String(settings.questionCount));
+  localStorage.setItem('learningMode', settings.learningMode);
 }
 
 export function loadHistory() {
-  const storedHistory = localStorage.getItem("gameHistory");
+  const storedHistory = localStorage.getItem('gameHistory');
   if (storedHistory) {
     try {
       return JSON.parse(storedHistory);
@@ -61,7 +49,7 @@ export function loadHistory() {
 }
 
 export function saveHistory(gameHistory) {
-  localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
+  localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
 }
 
 /**
@@ -69,7 +57,7 @@ export function saveHistory(gameHistory) {
  * @returns {Array<{questionKey: string, consecutiveCorrect: number}>}
  */
 export function loadMistakes() {
-  const storedMistakes = localStorage.getItem("mistakes");
+  const storedMistakes = localStorage.getItem('mistakes');
   if (storedMistakes) {
     try {
       return JSON.parse(storedMistakes);
@@ -85,7 +73,7 @@ export function loadMistakes() {
  * @param {Array<{questionKey: string, consecutiveCorrect: number}>} mistakes
  */
 export function saveMistakes(mistakes) {
-  localStorage.setItem("mistakes", JSON.stringify(mistakes));
+  localStorage.setItem('mistakes', JSON.stringify(mistakes));
 }
 
 /**
@@ -135,7 +123,7 @@ export function updateCorrectStreak(questionKey) {
  * @returns {number} 現在のXP
  */
 export function loadCharacterXP() {
-  const storedXP = localStorage.getItem("characterXP");
+  const storedXP = localStorage.getItem('characterXP');
   return storedXP ? parseInt(storedXP) : 0;
 }
 
@@ -144,7 +132,7 @@ export function loadCharacterXP() {
  * @param {number} xp - 新しいXP
  */
 export function saveCharacterXP(xp) {
-  localStorage.setItem("characterXP", xp.toString());
+  localStorage.setItem('characterXP', xp.toString());
 }
 
 /**
@@ -164,7 +152,7 @@ export function addCharacterXP(amount) {
  * @returns {Object} 日付をキー、学習回数を値とするオブジェクト
  */
 export function loadCalendar() {
-  const storedCalendar = localStorage.getItem("learningCalendar");
+  const storedCalendar = localStorage.getItem('learningCalendar');
   if (storedCalendar) {
     try {
       return JSON.parse(storedCalendar);
@@ -180,7 +168,7 @@ export function loadCalendar() {
  * @param {Object} calendar - 日付をキー、学習回数を値とするオブジェクト
  */
 export function saveCalendar(calendar) {
-  localStorage.setItem("learningCalendar", JSON.stringify(calendar));
+  localStorage.setItem('learningCalendar', JSON.stringify(calendar));
 }
 
 /**
@@ -190,8 +178,8 @@ export function saveCalendar(calendar) {
  */
 function formatDateKey(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 

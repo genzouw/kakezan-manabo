@@ -1,11 +1,11 @@
-import { generateMultiplicationQuestion, generateChoices } from "./logic.js";
+import { generateMultiplicationQuestion, generateChoices } from './logic.js';
 import {
   speakQuestion,
   speakAnswer,
   speakQuestionAndAnswer,
   playCorrectSound,
   playIncorrectSound,
-} from "./audio.js";
+} from './audio.js';
 import {
   loadSettings,
   saveSettings,
@@ -17,34 +17,45 @@ import {
   loadCharacterXP,
   addCharacterXP,
   recordTodayStudy,
-} from "./storage.js";
-import { updateQuestionProgress, displayHistory, displayMistakeNotebook, displayCharacter, showLevelUpModal, displayRewardCalendar } from "./ui.js";
-import { updateQuestionStats } from "./analytics.js";
-import { updateModeDescription } from "./ui-helper.js";
+} from './storage.js';
+import {
+  updateQuestionProgress,
+  displayHistory,
+  displayMistakeNotebook,
+  displayCharacter,
+  showLevelUpModal,
+  displayRewardCalendar,
+} from './ui.js';
+import { updateQuestionStats } from './analytics.js';
+import {
+  updateModeDescription,
+  applySettingsToDOM,
+  readSettingsFromDOM,
+} from './ui-helper.js';
 import {
   updateAchievementStats,
   updateStreak,
   checkNewBadges,
   showBadgeModal,
-} from "./badges.js";
-import { displayBadgeCollection } from "./badge-display.js";
-import { updateAllCharts } from "./charts.js";
-import { MenuManager } from "./menu.js";
-import { calculateXP, hasLeveledUp, getCurrentLevel } from "./character.js";
+} from './badges.js';
+import { displayBadgeCollection } from './badge-display.js';
+import { updateAllCharts } from './charts.js';
+import { MenuManager } from './menu.js';
+import { calculateXP, hasLeveledUp, getCurrentLevel } from './character.js';
 
 // レベルアップモーダル表示の遅延時間（ミリ秒）
 const LEVEL_UP_MODAL_DELAY_MS = 2500;
 
 let totalQuestions = 10;
-let learningMode = "normal";
+let learningMode = 'normal';
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   // メニューマネージャーを初期化
   const menuManager = new MenuManager();
 
-  const questionDiv = document.getElementById("question");
-  const choiceButtons = document.querySelectorAll(".choice-btn");
-  const startButton = document.getElementById("start-btn");
+  const questionDiv = document.getElementById('question');
+  const choiceButtons = document.querySelectorAll('.choice-btn');
+  const startButton = document.getElementById('start-btn');
 
   let currentQuestion;
   let currentQuestionIndex = 0;
@@ -60,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     currentQuestion = generateMultiplicationQuestion(
       completedQuestions,
       selectedLevels,
-      learningMode
+      learningMode,
     );
     if (currentQuestion === null) {
       return;
@@ -68,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
     questionDiv.textContent = currentQuestion.question;
     displayChoices();
     choiceButtons.forEach((button) => {
-      button.style.backgroundColor = "#f0f0f0";
+      button.style.backgroundColor = '#f0f0f0';
       button.style.opacity = 1;
     });
     await speakQuestion(currentQuestion.reading);
@@ -99,12 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // 連続正解数を更新
     updateStreak(isCorrect);
 
-    correctAnswerButton.style.backgroundColor = "lightgreen";
+    correctAnswerButton.style.backgroundColor = 'lightgreen';
     if (isCorrect) {
       correctAnswers++;
       playCorrectSound();
       // 正解時も問題と答えをセットで読み上げる
-      speakQuestionAndAnswer(currentQuestion.reading, currentQuestion.answerReading);
+      speakQuestionAndAnswer(
+        currentQuestion.reading,
+        currentQuestion.answerReading,
+      );
       // 正解時に連続正解カウントを更新（間違いノートに登録されている場合）
       updateCorrectStreak(currentQuestion.questionKey);
 
@@ -124,10 +138,13 @@ document.addEventListener("DOMContentLoaded", function () {
       // キャラクター表示を更新
       displayCharacter(newXP);
     } else {
-      selectedButton.style.backgroundColor = "pink";
+      selectedButton.style.backgroundColor = 'pink';
       playIncorrectSound();
       // 不正解時も問題と答えをセットで読み上げる
-      speakQuestionAndAnswer(currentQuestion.reading, currentQuestion.answerReading);
+      speakQuestionAndAnswer(
+        currentQuestion.reading,
+        currentQuestion.answerReading,
+      );
       // 不正解時に間違いノートに記録
       recordMistake(currentQuestion.questionKey);
     }
@@ -185,21 +202,22 @@ document.addEventListener("DOMContentLoaded", function () {
     displayRewardCalendar();
 
     questionDiv.textContent = `せいかいは ${correctAnswers}こ だったよ！`;
-    choiceButtons.forEach((button) => (button.style.display = "none"));
-    startButton.style.display = "inline-block";
+    choiceButtons.forEach((button) => (button.style.display = 'none'));
+    startButton.style.display = 'inline-block';
   }
 
-  startButton.addEventListener("click", function () {
+  startButton.addEventListener('click', function () {
     currentQuestionIndex = 0;
     correctAnswers = 0;
     gameStartTime = Date.now();
-    startButton.style.display = "none";
-    choiceButtons.forEach((button) => (button.style.display = "inline-block"));
+    startButton.style.display = 'none';
+    choiceButtons.forEach((button) => (button.style.display = 'inline-block'));
     displayQuestion();
     updateQuestionProgress(currentQuestionIndex);
   });
 
   const settings = loadSettings();
+  applySettingsToDOM(settings);
   totalQuestions = settings.questionCount;
   learningMode = settings.learningMode;
   gameHistory = loadHistory();
@@ -210,28 +228,30 @@ document.addEventListener("DOMContentLoaded", function () {
   displayCharacter(loadCharacterXP());
   displayRewardCalendar();
 
+  function persistSettingsFromDOM() {
+    const newSettings = readSettingsFromDOM();
+    saveSettings(newSettings);
+    totalQuestions = newSettings.questionCount;
+    learningMode = newSettings.learningMode;
+    return newSettings;
+  }
+
   document
     .querySelectorAll('#settings input[type="checkbox"]')
     .forEach((checkbox) => {
-      checkbox.addEventListener("change", () => {
-        const newSettings = saveSettings();
-        totalQuestions = newSettings.questionCount;
-        learningMode = newSettings.learningMode;
+      checkbox.addEventListener('change', () => {
+        persistSettingsFromDOM();
       });
     });
 
-  document.getElementById("questionCount").addEventListener("change", () => {
-    const newSettings = saveSettings();
-    totalQuestions = newSettings.questionCount;
-    learningMode = newSettings.learningMode;
+  document.getElementById('questionCount').addEventListener('change', () => {
+    persistSettingsFromDOM();
   });
 
-  const modeSelect = document.getElementById("learningMode");
+  const modeSelect = document.getElementById('learningMode');
   if (modeSelect) {
-    modeSelect.addEventListener("change", () => {
-      const newSettings = saveSettings();
-      totalQuestions = newSettings.questionCount;
-      learningMode = newSettings.learningMode;
+    modeSelect.addEventListener('change', () => {
+      persistSettingsFromDOM();
       updateModeDescription();
     });
   }
