@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.0.0
         with:
           node-version: "20"
           cache: "npm"
@@ -31,13 +31,15 @@ jobs:
       - name: Complexity check summary
         if: failure()
         run: |
-          echo "## Cyclomatic Complexity Check Failed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Some functions exceed the maximum cyclomatic complexity of 10." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Why does this matter?" >> $GITHUB_STEP_SUMMARY
-          echo "- Complexity 10 or less: 25% bug introduction rate" >> $GITHUB_STEP_SUMMARY
-          echo "- Complexity 40 or more: 50% bug introduction rate" >> $GITHUB_STEP_SUMMARY
-          echo "- Complexity 75 or more: 98% bug introduction rate" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Please refactor the flagged functions to reduce complexity." >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Cyclomatic Complexity Check Failed"
+            echo ""
+            echo "Some functions exceed the maximum cyclomatic complexity of 10."
+            echo ""
+            echo "### Why does this matter?"
+            echo "- Complexity 10 or less: 25% bug introduction rate"
+            echo "- Complexity 40 or more: 50% bug introduction rate"
+            echo "- Complexity 75 or more: 98% bug introduction rate"
+            echo ""
+            echo "Please refactor the flagged functions to reduce complexity."
+          } >> "$GITHUB_STEP_SUMMARY"
