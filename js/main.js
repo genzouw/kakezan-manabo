@@ -1,7 +1,6 @@
 import { generateMultiplicationQuestion, generateChoices } from './logic.js';
 import {
   speakQuestion,
-  speakAnswer,
   speakQuestionAndAnswer,
   playCorrectSound,
   playIncorrectSound,
@@ -56,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // （後段の loadSettings → applySettingsToDOM が要素の存在を前提とするため）
   renderLevelCheckboxes();
 
-  // メニューマネージャーを初期化
-  const menuManager = new MenuManager();
+  // メニューマネージャーを初期化（コンストラクタ内で DOM イベントを登録するため、戻り値は保持しない）
+  new MenuManager();
 
   const questionDiv = document.getElementById('question');
   const choiceButtons = document.querySelectorAll('.choice-btn');

@@ -70,7 +70,7 @@ export function getAchievementStats() {
   if (stats) {
     try {
       return JSON.parse(stats);
-    } catch (e) {
+    } catch {
       return createDefaultStats();
     }
   }
@@ -156,7 +156,7 @@ function recordPracticedLevels(practicesLevels, questions) {
     return;
   }
   questions.forEach((questionKey) => {
-    const level = parseInt(questionKey.split("x")[0]);
+    const level = Number.parseInt(questionKey.split("x")[0], 10);
     practicesLevels.add(level);
   });
 }
@@ -193,7 +193,7 @@ export function updateAchievementStats(gameResult) {
 
   stats.consecutiveDays = calculateConsecutiveDays(
     stats.lastPlayDate,
-    stats.consecutiveDays
+    stats.consecutiveDays,
   );
   stats.lastPlayDate = new Date().toDateString();
 
@@ -240,7 +240,7 @@ export function getEarnedBadges() {
   if (earned) {
     try {
       return JSON.parse(earned);
-    } catch (e) {
+    } catch {
       return [];
     }
   }
@@ -302,7 +302,7 @@ export function showBadgeModal(badges) {
             <div class="badge-name">${badge.name}</div>
             <div class="badge-description">${badge.description}</div>
           </div>
-        `
+        `,
           )
           .join("")}
       </div>
