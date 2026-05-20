@@ -59,7 +59,7 @@ npm run dev
 
 ## プロジェクト構造
 
-```
+```text
 kakezan-manabo/
 ├── index.html          # メインHTMLファイル
 ├── style.css           # スタイルシート
