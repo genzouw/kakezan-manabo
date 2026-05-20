@@ -35,14 +35,12 @@ export function displayHistory(gameHistory) {
   filteredHistory.forEach((result) => {
     const row = document.createElement('tr');
 
-    const formattedDate = new Date(result.date)
-      .toLocaleString('ja-JP', {
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-      .replace(/\//g, '/');
+    const formattedDate = new Date(result.date).toLocaleString('ja-JP', {
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
     const dateCell = document.createElement('td');
     dateCell.textContent = formattedDate;
     row.appendChild(dateCell);
