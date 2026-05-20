@@ -23,7 +23,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.0.0
         with:
-          node-version: "20"
+          # ESLint v10 の engines は ^20.19.0 || ^22.13.0 || >=24
+          # actions/setup-node の "20" 指定は最新の 20.x を解決するため現状は通るが、
+          # 将来の仕様変更で 20.19 未満が選ばれた場合に壊れるリスクがあるため明示化する
+          node-version: "20.19"
           cache: "npm"
 
       - name: Install dependencies
