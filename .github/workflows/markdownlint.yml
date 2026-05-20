@@ -36,7 +36,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.0.0
         with:
-          # ESLint v10 等が要求する最低 Node バージョンに合わせて明示化
+          # プロジェクト全体で Node.js 20.19 に統一（ESLint v10 の最低要件に合わせて）
           node-version: "20.19"
 
       - name: Install markdownlint-cli2
