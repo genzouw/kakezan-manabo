@@ -6,11 +6,11 @@
  * 問題ごとの統計情報を取得
  */
 export function getQuestionStats() {
-  const stats = localStorage.getItem("questionStats");
+  const stats = localStorage.getItem('questionStats');
   if (stats) {
     try {
       return JSON.parse(stats);
-    } catch (e) {
+    } catch {
       return {};
     }
   }
@@ -42,7 +42,7 @@ export function updateQuestionStats(questionKey, isCorrect) {
   }
   stats[questionKey].lastAttempt = new Date().toISOString();
 
-  localStorage.setItem("questionStats", JSON.stringify(stats));
+  localStorage.setItem('questionStats', JSON.stringify(stats));
 }
 
 /**
@@ -69,7 +69,7 @@ export function getQuestionAccuracy(questionKey) {
  */
 export function getWeakQuestions(availableQuestions, limit = 10) {
   return availableQuestions
-    .map(key => ({
+    .map((key) => ({
       key,
       accuracy: getQuestionAccuracy(key),
       attempts: (getQuestionStats()[key] || {}).attempts || 0,
@@ -82,7 +82,7 @@ export function getWeakQuestions(availableQuestions, limit = 10) {
       return a.accuracy - b.accuracy;
     })
     .slice(0, limit)
-    .map(item => item.key);
+    .map((item) => item.key);
 }
 
 /**
@@ -92,7 +92,7 @@ export function getWeakQuestions(availableQuestions, limit = 10) {
  * @returns {string} 選択された問題のキー
  */
 export function getAdaptiveQuestion(availableQuestions, targetAccuracy = 0.7) {
-  const questionsWithStats = availableQuestions.map(key => ({
+  const questionsWithStats = availableQuestions.map((key) => ({
     key,
     accuracy: getQuestionAccuracy(key),
     attempts: (getQuestionStats()[key] || {}).attempts || 0,
@@ -113,7 +113,7 @@ export function getAdaptiveQuestion(availableQuestions, targetAccuracy = 0.7) {
   // 上位30%からランダムに選択（完全に固定化しないため）
   const topCandidates = questionsWithStats.slice(
     0,
-    Math.max(1, Math.floor(questionsWithStats.length * 0.3))
+    Math.max(1, Math.floor(questionsWithStats.length * 0.3)),
   );
 
   return topCandidates[Math.floor(Math.random() * topCandidates.length)].key;
@@ -127,6 +127,6 @@ export function getAdaptiveQuestion(availableQuestions, targetAccuracy = 0.7) {
 export function getAverageAccuracy(questionKeys) {
   if (questionKeys.length === 0) return 0.5;
 
-  const accuracies = questionKeys.map(key => getQuestionAccuracy(key));
+  const accuracies = questionKeys.map((key) => getQuestionAccuracy(key));
   return accuracies.reduce((sum, acc) => sum + acc, 0) / accuracies.length;
 }

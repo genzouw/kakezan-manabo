@@ -19,7 +19,7 @@ export function loadSettings() {
     try {
       const parsed = JSON.parse(storedLevels);
       selectedLevels = Array.isArray(parsed) ? parsed : null;
-    } catch (e) {
+    } catch {
       selectedLevels = null;
     }
   }
@@ -59,7 +59,7 @@ export function loadHistory() {
   if (storedHistory) {
     try {
       return JSON.parse(storedHistory);
-    } catch (e) {
+    } catch {
       return [];
     }
   }
@@ -79,7 +79,7 @@ export function loadMistakes() {
   if (storedMistakes) {
     try {
       return JSON.parse(storedMistakes);
-    } catch (e) {
+    } catch {
       return [];
     }
   }
@@ -174,7 +174,7 @@ export function loadCalendar() {
   if (storedCalendar) {
     try {
       return JSON.parse(storedCalendar);
-    } catch (e) {
+    } catch {
       return {};
     }
   }

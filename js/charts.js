@@ -8,13 +8,13 @@ import {
   getWeakestQuestions,
   getDailyHistory,
   getAccuracyByTimeOfDay,
-} from "./statistics.js";
+} from './statistics.js';
 
 /**
  * 段ごとの正解率を棒グラフで表示
  */
 export function renderLevelAccuracyChart() {
-  const canvas = document.getElementById("levelAccuracyChart");
+  const canvas = document.getElementById('levelAccuracyChart');
   if (!canvas) return;
 
   const levelStats = calculateAccuracyByLevel();
@@ -31,17 +31,17 @@ export function renderLevelAccuracyChart() {
     window.levelAccuracyChartInstance.destroy();
   }
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
   window.levelAccuracyChartInstance = new Chart(ctx, {
-    type: "bar",
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [
         {
-          label: "正解率 (%)",
+          label: '正解率 (%)',
           data: data,
-          backgroundColor: "rgba(76, 175, 80, 0.6)",
-          borderColor: "rgba(76, 175, 80, 1)",
+          backgroundColor: 'rgba(76, 175, 80, 0.6)',
+          borderColor: 'rgba(76, 175, 80, 1)',
           borderWidth: 1,
         },
       ],
@@ -55,7 +55,7 @@ export function renderLevelAccuracyChart() {
           max: 100,
           title: {
             display: true,
-            text: "正解率 (%)",
+            text: '正解率 (%)',
           },
         },
       },
@@ -65,7 +65,7 @@ export function renderLevelAccuracyChart() {
         },
         title: {
           display: true,
-          text: "段ごとの正解率",
+          text: '段ごとの正解率',
         },
       },
     },
@@ -76,7 +76,7 @@ export function renderLevelAccuracyChart() {
  * 日別の学習履歴を折れ線グラフで表示
  */
 export function renderDailyHistoryChart() {
-  const canvas = document.getElementById("dailyHistoryChart");
+  const canvas = document.getElementById('dailyHistoryChart');
   if (!canvas) return;
 
   const dailyData = getDailyHistory(7);
@@ -89,25 +89,25 @@ export function renderDailyHistoryChart() {
     window.dailyHistoryChartInstance.destroy();
   }
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
   window.dailyHistoryChartInstance = new Chart(ctx, {
-    type: "line",
+    type: 'line',
     data: {
       labels: labels,
       datasets: [
         {
-          label: "正解率 (%)",
+          label: '正解率 (%)',
           data: accuracyData,
-          borderColor: "rgba(76, 175, 80, 1)",
-          backgroundColor: "rgba(76, 175, 80, 0.1)",
-          yAxisID: "y",
+          borderColor: 'rgba(76, 175, 80, 1)',
+          backgroundColor: 'rgba(76, 175, 80, 0.1)',
+          yAxisID: 'y',
         },
         {
-          label: "プレイ回数",
+          label: 'プレイ回数',
           data: gamesData,
-          borderColor: "rgba(33, 150, 243, 1)",
-          backgroundColor: "rgba(33, 150, 243, 0.1)",
-          yAxisID: "y1",
+          borderColor: 'rgba(33, 150, 243, 1)',
+          backgroundColor: 'rgba(33, 150, 243, 0.1)',
+          yAxisID: 'y1',
         },
       ],
     },
@@ -115,39 +115,39 @@ export function renderDailyHistoryChart() {
       responsive: true,
       maintainAspectRatio: false,
       interaction: {
-        mode: "index",
+        mode: 'index',
         intersect: false,
       },
       scales: {
         y: {
-          type: "linear",
+          type: 'linear',
           display: true,
-          position: "left",
+          position: 'left',
           beginAtZero: true,
           max: 100,
           title: {
             display: true,
-            text: "正解率 (%)",
+            text: '正解率 (%)',
           },
         },
         y1: {
-          type: "linear",
+          type: 'linear',
           display: true,
-          position: "right",
+          position: 'right',
           beginAtZero: true,
           grid: {
             drawOnChartArea: false,
           },
           title: {
             display: true,
-            text: "プレイ回数",
+            text: 'プレイ回数',
           },
         },
       },
       plugins: {
         title: {
           display: true,
-          text: "過去7日間の学習履歴",
+          text: '過去7日間の学習履歴',
         },
       },
     },
@@ -158,17 +158,17 @@ export function renderDailyHistoryChart() {
  * 時間帯別の正解率を円グラフで表示
  */
 export function renderTimeOfDayChart() {
-  const canvas = document.getElementById("timeOfDayChart");
+  const canvas = document.getElementById('timeOfDayChart');
   if (!canvas) return;
 
   const timeData = getAccuracyByTimeOfDay();
   const labels = [];
   const data = [];
   const backgroundColors = [
-    "rgba(255, 206, 86, 0.6)",
-    "rgba(75, 192, 192, 0.6)",
-    "rgba(153, 102, 255, 0.6)",
-    "rgba(54, 162, 235, 0.6)",
+    'rgba(255, 206, 86, 0.6)',
+    'rgba(75, 192, 192, 0.6)',
+    'rgba(153, 102, 255, 0.6)',
+    'rgba(54, 162, 235, 0.6)',
   ];
 
   Object.keys(timeData).forEach((key) => {
@@ -182,25 +182,25 @@ export function renderTimeOfDayChart() {
 
   // データがない場合は表示しない
   if (data.length === 0) {
-    canvas.style.display = "none";
+    canvas.style.display = 'none';
     return;
   }
 
-  canvas.style.display = "block";
+  canvas.style.display = 'block';
 
   // 既存のチャートがあれば破棄
   if (window.timeOfDayChartInstance) {
     window.timeOfDayChartInstance.destroy();
   }
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
   window.timeOfDayChartInstance = new Chart(ctx, {
-    type: "doughnut",
+    type: 'doughnut',
     data: {
       labels: labels,
       datasets: [
         {
-          label: "正解率 (%)",
+          label: '正解率 (%)',
           data: data,
           backgroundColor: backgroundColors.slice(0, data.length),
           borderWidth: 1,
@@ -213,10 +213,10 @@ export function renderTimeOfDayChart() {
       plugins: {
         title: {
           display: true,
-          text: "時間帯別正解率",
+          text: '時間帯別正解率',
         },
         legend: {
-          position: "bottom",
+          position: 'bottom',
         },
       },
     },
@@ -227,13 +227,13 @@ export function renderTimeOfDayChart() {
  * 学習統計サマリーを表示
  */
 export function renderStatisticsSummary() {
-  const summaryDiv = document.getElementById("statisticsSummary");
+  const summaryDiv = document.getElementById('statisticsSummary');
   if (!summaryDiv) return;
 
   const studyTime = calculateStudyTime();
   const weakQuestions = getWeakestQuestions();
 
-  let weakQuestionsHTML = "";
+  let weakQuestionsHTML;
   if (weakQuestions.length > 0) {
     weakQuestionsHTML = `
       <div class="weak-questions">
@@ -242,9 +242,9 @@ export function renderStatisticsSummary() {
           ${weakQuestions
             .map(
               (q) =>
-                `<li>${q.question}: ${q.accuracy.toFixed(1)}% (${q.attempts}かい)`
+                `<li>${q.question}: ${q.accuracy.toFixed(1)}% (${q.attempts}かい)`,
             )
-            .join("")}
+            .join('')}
         </ul>
       </div>
     `;
