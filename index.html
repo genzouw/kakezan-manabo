@@ -36,13 +36,35 @@
 
     <!-- サイドメニュー -->
     <nav id="side-menu" class="side-menu">
-      <button id="close-menu-btn" class="close-menu-btn" aria-label="メニューを閉じる">×</button>
+      <button
+        id="close-menu-btn"
+        class="close-menu-btn"
+        aria-label="メニューを閉じる"
+      >
+        ×
+      </button>
       <ul class="menu-list">
-        <li><a href="#" class="menu-item active" data-page="main">🏠 ホーム</a></li>
-        <li><a href="#" class="menu-item" data-page="statistics">📊 がくしゅうきろく</a></li>
-        <li><a href="#" class="menu-item" data-page="history">📖 これまでのきろく</a></li>
-        <li><a href="#" class="menu-item" data-page="mistakes">📝 もういちどチャレンジ</a></li>
-        <li><a href="#" class="menu-item" data-page="settings">⚙️ せってい</a></li>
+        <li>
+          <a href="#" class="menu-item active" data-page="main">🏠 ホーム</a>
+        </li>
+        <li>
+          <a href="#" class="menu-item" data-page="statistics"
+            >📊 がくしゅうきろく</a
+          >
+        </li>
+        <li>
+          <a href="#" class="menu-item" data-page="history"
+            >📖 これまでのきろく</a
+          >
+        </li>
+        <li>
+          <a href="#" class="menu-item" data-page="mistakes"
+            >📝 もういちどチャレンジ</a
+          >
+        </li>
+        <li>
+          <a href="#" class="menu-item" data-page="settings">⚙️ せってい</a>
+        </li>
       </ul>
     </nav>
 
@@ -101,16 +123,14 @@
           <h3 class="setting-card-title">🔢 れんしゅうするだん</h3>
           <div class="setting-card-content">
             <div class="level-selection-grid">
-              <label class="level-checkbox" data-level="1"><input type="checkbox" id="level1" value="1" checked /> <span>1のだん</span></label>
-              <label class="level-checkbox" data-level="2"><input type="checkbox" id="level2" value="2" checked /> <span>2のだん</span></label>
-              <label class="level-checkbox" data-level="3"><input type="checkbox" id="level3" value="3" checked /> <span>3のだん</span></label>
-              <label class="level-checkbox" data-level="4"><input type="checkbox" id="level4" value="4" checked /> <span>4のだん</span></label>
-              <label class="level-checkbox" data-level="5"><input type="checkbox" id="level5" value="5" checked /> <span>5のだん</span></label>
-              <label class="level-checkbox" data-level="6"><input type="checkbox" id="level6" value="6" checked /> <span>6のだん</span></label>
-              <label class="level-checkbox" data-level="7"><input type="checkbox" id="level7" value="7" checked /> <span>7のだん</span></label>
-              <label class="level-checkbox" data-level="8"><input type="checkbox" id="level8" value="8" checked /> <span>8のだん</span></label>
-              <label class="level-checkbox" data-level="9"><input type="checkbox" id="level9" value="9" checked /> <span>9のだん</span></label>
+              <!-- 段選択チェックボックスは js/level-selector.js が template から動的生成する -->
             </div>
+            <template id="level-checkbox-template">
+              <label class="level-checkbox">
+                <input type="checkbox" checked />
+                <span></span>
+              </label>
+            </template>
           </div>
         </div>
 
@@ -118,7 +138,14 @@
         <div class="setting-card">
           <h3 class="setting-card-title">📝 もんだいのかず</h3>
           <div class="setting-card-content">
-            <input type="number" id="questionCount" class="question-count-input" value="10" min="1" max="81" />
+            <input
+              type="number"
+              id="questionCount"
+              class="question-count-input"
+              value="10"
+              min="1"
+              max="81"
+            />
             <p class="setting-hint">1〜81もんまでえらべるよ</p>
           </div>
         </div>
