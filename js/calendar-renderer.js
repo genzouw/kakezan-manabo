@@ -80,8 +80,9 @@ export function createCalendarGrid(date, calendarData, today = new Date()) {
     gridDiv.appendChild(emptyCell);
   }
 
-  // 各日付のセルを追加
-  for (let day = 1; day <= lastDay.getDate(); day++) {
+  // 各日付のセルを追加（getDate() の呼び出しはループ外に抽出）
+  const daysInMonth = lastDay.getDate();
+  for (let day = 1; day <= daysInMonth; day++) {
     gridDiv.appendChild(createDayCell(year, month, day, calendarData, today));
   }
 
