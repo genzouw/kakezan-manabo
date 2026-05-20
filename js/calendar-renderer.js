@@ -3,6 +3,8 @@
  * 各ヘルパーはDOM要素を生成して返すのみで、外側のコンテナへの挿入は呼び出し元の責務。
  */
 
+import { formatDateKey } from './storage.js';
+
 const WEEKDAY_LABELS = ['にち', 'げつ', 'か', 'すい', 'もく', 'きん', 'ど'];
 
 /**
@@ -102,7 +104,7 @@ function createDayCell(year, month, day, calendarData, today) {
   const dayCell = document.createElement('div');
   dayCell.classList.add('calendar-day');
 
-  const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const dateKey = formatDateKey(new Date(year, month, day));
   const studyCount = calendarData[dateKey] || 0;
 
   const dateNumber = document.createElement('div');
