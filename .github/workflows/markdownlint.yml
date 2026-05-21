@@ -29,21 +29,12 @@ jobs:
     # 整備完了後に continue-on-error を外して赤検知に切り替える。
     continue-on-error: true
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.0
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
         with:
           persist-credentials: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.0.0
-        with:
-          # プロジェクト全体で Node.js 20.19 に統一（ESLint v10 の最低要件に合わせて）
-          node-version: '20.19'
-
-      - name: Install markdownlint-cli2
-        # DavidAnson/markdownlint-cli2-action は allowed_actions に含まれない
-        # third-party action のため、npm 経由で実行する。
-        # --ignore-scripts で postinstall 経由の任意コード実行を防ぐ。
-        run: npm install -g --no-fund --no-audit --ignore-scripts markdownlint-cli2@0.22.1
-
       - name: Run markdownlint-cli2
-        run: markdownlint-cli2 --config .markdownlint-cli2.jsonc "**/*.md"
+        uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20
+        with:
+          config: '.markdownlint-cli2.jsonc'
+          globs: '**/*.md'

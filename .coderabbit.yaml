@@ -1,19 +1,28 @@
 # CodeRabbit configuration
 # https://docs.coderabbit.ai/reference/configuration
 
-language: ja-JP
+language: 'ja-JP'
 early_access: false
 enable_free_tier: true
 
 reviews:
-  # 個人運営のためレビューはまず "chill" で緩めに始める。
-  # 必要に応じて "assertive" に切り替えて検出感度を上げる。
-  profile: chill
+  # 個人運営だが、main マージ後に Cloud Run / Cloudflare Pages の本番環境へ
+  # 自動デプロイされる前提のため検出漏れを避けたい。"assertive" で検出感度を
+  # 高めに維持し、ノイズが過剰になった場合は "chill" に戻すことも検討する。
+  profile: 'assertive'
 
-  # CodeRabbit を bot reviewer として動作させる。
-  # 問題なしと判断した PR に対して Approve ステータスを返す。
-  # 個人運営での self-merge 運用 (PR 作成者は自分の PR を承認できない GitHub 仕様)
-  # を補助する目的で有効化。Approve は最終判断ではなく補助。
+  # PR 全体に対する指針。path_instructions に "**/*" を入れるとファイル毎に
+  # 繰り返し適用されてノイズが増えるため、広範な指示は instructions に集約する。
+  instructions: |
+    変更がプロジェクト全体に与える影響や、アーキテクチャの観点など、広いスコープからコードレビューを行ってください。必ず日本語でコメントしてください。
+    メインブランチにマージされた場合に Cloud Run / Cloudflare Pages 上の本番環境にデプロイされることを考慮し、以下の観点を強調し、重要視して必ずレビューに盛り込んでください:
+    - 実行環境へのアクセス方法（認証情報、API キー、DB 接続文字列、内部 URL など）がコードやログから漏洩していないこと。
+    - 実行環境に不正にアクセスするための攻撃手法や脆弱性（インジェクション、認可不足、不適切な権限設定、CORS / CSRF / Secure Cookie / Secure Headers の設定崩れなど）が入り込んでいないこと。
+
+  # CodeRabbit を bot reviewer として動作させる。問題なしと判断した PR に対して
+  # Approve ステータスを返す。個人運営での self-merge 運用 (PR 作成者は自分の
+  # PR を承認できない GitHub 仕様) を補助する目的で有効化。Approve は最終判断
+  # ではなく補助。
   request_changes_workflow: true
 
   high_level_summary: true
@@ -27,22 +36,40 @@ reviews:
     base_branches:
       - main
 
+  path_instructions:
+    - path: 'js/**/*.js'
+      instructions: |
+        ブラウザ上で動作する vanilla JavaScript (ES modules) のクライアントコードとしてレビューしてください:
+        - ユーザー入力をそのまま innerHTML 等に流していないか (XSS 観点)。
+        - イベントリスナのリーク (重複登録 / 解除漏れ) が無いか。
+        - DOM 操作が描画パフォーマンスを著しく落としていないか。
+    - path: '.github/workflows/**'
+      instructions: |
+        GitHub Actions ワークフローとしてレビューしてください:
+        - シークレットの露出 (echo / set-output 経由のリーク) が無いか。
+        - 外部 action は SHA pin されているか。
+        - permissions: が最小権限になっているか。
+
   # 生成物 / 依存物 / ロックファイルなどはレビュー対象から除外する。
-  # path_filters は明示的な include がないと全ファイルが対象外になる仕様のため、
-  # 先頭で "**" を指定して全ファイルを対象としたうえで個別に除外する。
   path_filters:
-    - '**'
-    - '!dist/**'
-    - '!build/**'
-    - '!coverage/**'
-    - '!node_modules/**'
-    - '!pnpm-lock.yaml'
-    - '!package-lock.json'
-    - '!yarn.lock'
+    - '!**/dist/**'
+    - '!**/build/**'
+    - '!**/coverage/**'
+    - '!**/node_modules/**'
+    - '!**/.wrangler/**'
+    - '!**/.turbo/**'
+    - '!**/.next/**'
+    - '!infra/cdktf.out/**'
+    - '!infra/.gen/**'
+    - '!**/bun.lock'
+    - '!**/package-lock.json'
+    - '!**/yarn.lock'
+    - '!**/pnpm-lock.yaml'
     - '!**/*.min.js'
     - '!**/*.min.css'
     - '!**/*.map'
     - '!**/*.snap'
+    - '!**/*.tsbuildinfo'
 
   abort_on_close: true
 

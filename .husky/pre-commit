@@ -1,0 +1,15 @@
+# Run gitleaks local check if installed to prevent committing secrets
+if command -v gitleaks &> /dev/null; then
+  echo "🔒 Running local gitleaks check..."
+  gitleaks protect --staged --verbose
+else
+  echo "⚠️ gitleaks is not installed locally. Skipping local secret scan. (Highly recommended: brew install gitleaks)"
+fi
+
+# Run format check
+echo "🎨 Running format check..."
+npm run format:check || exit 1
+
+# Run lint
+echo "🔍 Running lint..."
+npm run lint || exit 1
