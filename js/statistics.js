@@ -2,8 +2,8 @@
  * 学習統計モジュール
  */
 
-import { getQuestionStats } from "./analytics.js";
-import { loadHistory } from "./storage.js";
+import { getQuestionStats } from './analytics.js';
+import { loadHistory } from './storage.js';
 
 /**
  * 段ごとの正解率を計算
@@ -21,7 +21,7 @@ export function calculateAccuracyByLevel() {
   }
 
   Object.keys(stats).forEach((key) => {
-    const level = parseInt(key.split("x")[0]);
+    const level = parseInt(key.split('x')[0]);
     const questionStat = stats[key];
 
     if (levelStats[level]) {
@@ -81,7 +81,7 @@ export function getWeakestQuestions() {
     if (questionStat.attempts > 0) {
       const accuracy = (questionStat.correct / questionStat.attempts) * 100;
       questions.push({
-        question: key.replace("x", " × "),
+        question: key.replace('x', ' × '),
         accuracy: accuracy,
         attempts: questionStat.attempts,
       });
@@ -106,9 +106,9 @@ export function getDailyHistory(days = 7) {
   // 過去N日分の日付を初期化
   for (let i = 0; i < days; i++) {
     const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-    const dateKey = date.toLocaleDateString("ja-JP", {
-      month: "2-digit",
-      day: "2-digit",
+    const dateKey = date.toLocaleDateString('ja-JP', {
+      month: '2-digit',
+      day: '2-digit',
     });
     dailyData[dateKey] = {
       games: 0,
@@ -121,9 +121,9 @@ export function getDailyHistory(days = 7) {
   // ゲーム履歴を集計
   history.forEach((game) => {
     const gameDate = new Date(game.date);
-    const dateKey = gameDate.toLocaleDateString("ja-JP", {
-      month: "2-digit",
-      day: "2-digit",
+    const dateKey = gameDate.toLocaleDateString('ja-JP', {
+      month: '2-digit',
+      day: '2-digit',
     });
 
     if (dailyData[dateKey]) {
@@ -150,10 +150,10 @@ export function getDailyHistory(days = 7) {
 export function getAccuracyByTimeOfDay() {
   const history = loadHistory();
   const timeSlots = {
-    morning: { total: 0, correct: 0, label: "朝 (6-12時)" },
-    afternoon: { total: 0, correct: 0, label: "昼 (12-18時)" },
-    evening: { total: 0, correct: 0, label: "夜 (18-24時)" },
-    night: { total: 0, correct: 0, label: "深夜 (0-6時)" },
+    morning: { total: 0, correct: 0, label: '朝 (6-12時)' },
+    afternoon: { total: 0, correct: 0, label: '昼 (12-18時)' },
+    evening: { total: 0, correct: 0, label: '夜 (18-24時)' },
+    night: { total: 0, correct: 0, label: '深夜 (0-6時)' },
   };
 
   history.forEach((game) => {
@@ -162,13 +162,13 @@ export function getAccuracyByTimeOfDay() {
     let slot;
 
     if (hour >= 6 && hour < 12) {
-      slot = "morning";
+      slot = 'morning';
     } else if (hour >= 12 && hour < 18) {
-      slot = "afternoon";
+      slot = 'afternoon';
     } else if (hour >= 18 && hour < 24) {
-      slot = "evening";
+      slot = 'evening';
     } else {
-      slot = "night";
+      slot = 'night';
     }
 
     timeSlots[slot].total += game.totalQuestions;

@@ -26,8 +26,8 @@ jobs:
           # ESLint v10 の engines は ^20.19.0 || ^22.13.0 || >=24
           # actions/setup-node の "20" 指定は最新の 20.x を解決するため現状は通るが、
           # 将来の仕様変更で 20.19 未満が選ばれた場合に壊れるリスクがあるため明示化する
-          node-version: "20.19"
-          cache: "npm"
+          node-version: '20.19'
+          cache: 'npm'
 
       - name: Install dependencies
         # lint 専用のため install スクリプトは不要。

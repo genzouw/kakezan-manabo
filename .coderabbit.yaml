@@ -31,18 +31,18 @@ reviews:
   # path_filters は明示的な include がないと全ファイルが対象外になる仕様のため、
   # 先頭で "**" を指定して全ファイルを対象としたうえで個別に除外する。
   path_filters:
-    - "**"
-    - "!dist/**"
-    - "!build/**"
-    - "!coverage/**"
-    - "!node_modules/**"
-    - "!pnpm-lock.yaml"
-    - "!package-lock.json"
-    - "!yarn.lock"
-    - "!**/*.min.js"
-    - "!**/*.min.css"
-    - "!**/*.map"
-    - "!**/*.snap"
+    - '**'
+    - '!dist/**'
+    - '!build/**'
+    - '!coverage/**'
+    - '!node_modules/**'
+    - '!pnpm-lock.yaml'
+    - '!package-lock.json'
+    - '!yarn.lock'
+    - '!**/*.min.js'
+    - '!**/*.min.css'
+    - '!**/*.map'
+    - '!**/*.snap'
 
   abort_on_close: true
 
