@@ -5,59 +5,59 @@
 // バッジの定義
 export const BADGES = {
   firstWin: {
-    id: "firstWin",
-    name: "はじめの一歩",
-    description: "初めてのゲームをクリア",
-    emoji: "🎯",
+    id: 'firstWin',
+    name: 'はじめの一歩',
+    description: '初めてのゲームをクリア',
+    emoji: '🎯',
     condition: (stats) => stats.gamesPlayed >= 1,
   },
   perfectGame: {
-    id: "perfectGame",
-    name: "パーフェクト",
-    description: "全問正解を達成",
-    emoji: "🏆",
+    id: 'perfectGame',
+    name: 'パーフェクト',
+    description: '全問正解を達成',
+    emoji: '🏆',
     condition: (stats) => stats.perfectGames >= 1,
   },
   streakMaster: {
-    id: "streakMaster",
-    name: "連続正解マスター",
-    description: "10問連続で正解",
-    emoji: "🔥",
+    id: 'streakMaster',
+    name: '連続正解マスター',
+    description: '10問連続で正解',
+    emoji: '🔥',
     condition: (stats) => stats.maxStreak >= 10,
   },
   dedicated: {
-    id: "dedicated",
-    name: "継続は力なり",
-    description: "3日連続で学習",
-    emoji: "📅",
+    id: 'dedicated',
+    name: '継続は力なり',
+    description: '3日連続で学習',
+    emoji: '📅',
     condition: (stats) => stats.consecutiveDays >= 3,
   },
   weekWarrior: {
-    id: "weekWarrior",
-    name: "1週間の戦士",
-    description: "7日連続で学習",
-    emoji: "⭐",
+    id: 'weekWarrior',
+    name: '1週間の戦士',
+    description: '7日連続で学習',
+    emoji: '⭐',
     condition: (stats) => stats.consecutiveDays >= 7,
   },
   hundredQuestions: {
-    id: "hundredQuestions",
-    name: "百問突破",
-    description: "累計100問に挑戦",
-    emoji: "💯",
+    id: 'hundredQuestions',
+    name: '百問突破',
+    description: '累計100問に挑戦',
+    emoji: '💯',
     condition: (stats) => stats.totalQuestions >= 100,
   },
   speedster: {
-    id: "speedster",
-    name: "スピードマスター",
-    description: "10問を2分以内でクリア",
-    emoji: "⚡",
+    id: 'speedster',
+    name: 'スピードマスター',
+    description: '10問を2分以内でクリア',
+    emoji: '⚡',
     condition: (stats) => stats.hasSpeedRecord,
   },
   allRounder: {
-    id: "allRounder",
-    name: "オールラウンダー",
-    description: "全ての段を練習",
-    emoji: "🌟",
+    id: 'allRounder',
+    name: 'オールラウンダー',
+    description: '全ての段を練習',
+    emoji: '🌟',
     condition: (stats) => stats.practiceAllLevels,
   },
 };
@@ -66,7 +66,7 @@ export const BADGES = {
  * 統計情報を取得
  */
 export function getAchievementStats() {
-  const stats = localStorage.getItem("achievementStats");
+  const stats = localStorage.getItem('achievementStats');
   if (stats) {
     try {
       return JSON.parse(stats);
@@ -104,7 +104,7 @@ function saveAchievementStats(stats) {
     ...stats,
     practicesLevels: Array.from(stats.practicesLevels),
   };
-  localStorage.setItem("achievementStats", JSON.stringify(statsToSave));
+  localStorage.setItem('achievementStats', JSON.stringify(statsToSave));
 }
 
 /**
@@ -156,7 +156,7 @@ function recordPracticedLevels(practicesLevels, questions) {
     return;
   }
   questions.forEach((questionKey) => {
-    const level = Number.parseInt(questionKey.split("x")[0], 10);
+    const level = Number.parseInt(questionKey.split('x')[0], 10);
     practicesLevels.add(level);
   });
 }
@@ -236,7 +236,7 @@ export function updateStreak(isCorrect) {
  * 獲得済みバッジを取得
  */
 export function getEarnedBadges() {
-  const earned = localStorage.getItem("earnedBadges");
+  const earned = localStorage.getItem('earnedBadges');
   if (earned) {
     try {
       return JSON.parse(earned);
@@ -255,7 +255,7 @@ function earnBadge(badgeId) {
   const earnedBadges = getEarnedBadges();
   if (!earnedBadges.includes(badgeId)) {
     earnedBadges.push(badgeId);
-    localStorage.setItem("earnedBadges", JSON.stringify(earnedBadges));
+    localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
     return true;
   }
   return false;
@@ -288,8 +288,8 @@ export function checkNewBadges() {
 export function showBadgeModal(badges) {
   if (badges.length === 0) return;
 
-  const modal = document.createElement("div");
-  modal.className = "badge-modal";
+  const modal = document.createElement('div');
+  modal.className = 'badge-modal';
   modal.innerHTML = `
     <div class="badge-modal-content">
       <h2>🎉 バッジをゲットしたよ！</h2>
@@ -304,7 +304,7 @@ export function showBadgeModal(badges) {
           </div>
         `,
           )
-          .join("")}
+          .join('')}
       </div>
       <button class="badge-close-btn">とじる</button>
     </div>
@@ -312,8 +312,8 @@ export function showBadgeModal(badges) {
 
   document.body.appendChild(modal);
 
-  const closeBtn = modal.querySelector(".badge-close-btn");
-  closeBtn.addEventListener("click", () => {
+  const closeBtn = modal.querySelector('.badge-close-btn');
+  closeBtn.addEventListener('click', () => {
     modal.remove();
   });
 

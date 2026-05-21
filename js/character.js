@@ -7,38 +7,38 @@
 export const CHARACTER_LEVELS = [
   {
     level: 0,
-    name: "たまご",
+    name: 'たまご',
     requiredXP: 0,
-    emoji: "🥚",
-    message: "たまごからうまれるよ！",
+    emoji: '🥚',
+    message: 'たまごからうまれるよ！',
   },
   {
     level: 1,
-    name: "あかちゃん",
+    name: 'あかちゃん',
     requiredXP: 10,
-    emoji: "🐣",
-    message: "あかちゃんがうまれたよ！",
+    emoji: '🐣',
+    message: 'あかちゃんがうまれたよ！',
   },
   {
     level: 2,
-    name: "こども",
+    name: 'こども',
     requiredXP: 30,
-    emoji: "🐥",
-    message: "こどもにせいちょうしたよ！",
+    emoji: '🐥',
+    message: 'こどもにせいちょうしたよ！',
   },
   {
     level: 3,
-    name: "おとな",
+    name: 'おとな',
     requiredXP: 60,
-    emoji: "🐔",
-    message: "おとなになったよ！すごい！",
+    emoji: '🐔',
+    message: 'おとなになったよ！すごい！',
   },
   {
     level: 4,
-    name: "マスター",
+    name: 'マスター',
     requiredXP: 100,
-    emoji: "🦅",
-    message: "マスターになったよ！かんぺき！",
+    emoji: '🦅',
+    message: 'マスターになったよ！かんぺき！',
   },
 ];
 
@@ -64,7 +64,7 @@ export function getCurrentLevel(xp) {
 export function getProgressToNextLevel(xp) {
   const currentLevel = getCurrentLevel(xp);
   const currentLevelIndex = CHARACTER_LEVELS.findIndex(
-    (l) => l.level === currentLevel.level
+    (l) => l.level === currentLevel.level,
   );
 
   // 最大レベルの場合
@@ -80,9 +80,7 @@ export function getProgressToNextLevel(xp) {
   const nextLevel = CHARACTER_LEVELS[currentLevelIndex + 1];
   const xpInCurrentLevel = xp - currentLevel.requiredXP;
   const xpNeededForNextLevel = nextLevel.requiredXP - currentLevel.requiredXP;
-  const progress = Math.floor(
-    (xpInCurrentLevel / xpNeededForNextLevel) * 100
-  );
+  const progress = Math.floor((xpInCurrentLevel / xpNeededForNextLevel) * 100);
 
   return {
     currentLevel,

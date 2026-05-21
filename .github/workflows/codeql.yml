@@ -7,7 +7,7 @@ on:
     branches: [main]
   schedule:
     # 毎週月曜 03:00 JST (= 日曜 18:00 UTC) に main を再スキャン
-    - cron: "0 18 * * 0"
+    - cron: '0 18 * * 0'
 
 concurrency:
   group: codeql-${{ github.ref }}
@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         # frontend は tsx、backend は ts。両方とも 'javascript-typescript' でまとめてスキャン。
-        language: ["javascript-typescript"]
+        language: ['javascript-typescript']
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.0
@@ -44,4 +44,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@78ed0c7291d93e40c51b085850dc669a4c3ab73b # v3
         with:
-          category: "/language:${{ matrix.language }}"
+          category: '/language:${{ matrix.language }}'

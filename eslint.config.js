@@ -1,5 +1,6 @@
 import globals from 'globals';
 import js from '@eslint/js';
+import prettierConfig from 'eslint-config-prettier';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
@@ -22,6 +23,17 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/**'],
+    files: ['**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
+      },
+    },
   },
+  {
+    ignores: ['node_modules/**', 'dist/**', 'build/**', 'coverage/**'],
+  },
+  // Prettier との競合ルールを無効化（必ず配列の最後に置く）
+  prettierConfig,
 ];

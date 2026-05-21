@@ -22,7 +22,7 @@ export class MenuManager {
     this.closeMenuBtn?.addEventListener('click', () => this.closeMenu());
 
     // メニューアイテムのクリックイベント
-    this.menuItems.forEach(item => {
+    this.menuItems.forEach((item) => {
       item.addEventListener('click', (e) => this.handleMenuItemClick(e));
     });
 
@@ -66,12 +66,12 @@ export class MenuManager {
 
   switchPage(pageName) {
     // すべてのページを非表示
-    this.pageContents.forEach(content => {
+    this.pageContents.forEach((content) => {
       content.classList.remove('active');
     });
 
     // すべてのメニューアイテムの選択状態を解除
-    this.menuItems.forEach(item => {
+    this.menuItems.forEach((item) => {
       item.classList.remove('active');
     });
 
@@ -82,7 +82,9 @@ export class MenuManager {
     }
 
     // 対応するメニューアイテムをアクティブに
-    const activeMenuItem = document.querySelector(`.menu-item[data-page="${pageName}"]`);
+    const activeMenuItem = document.querySelector(
+      `.menu-item[data-page="${pageName}"]`,
+    );
     if (activeMenuItem) {
       activeMenuItem.classList.add('active');
     }

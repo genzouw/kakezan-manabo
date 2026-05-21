@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Tool-managed metadata (do not reformat)
+.serena/
+
+# Lock files (managed by package manager)
+package-lock.json
+
+# Build / output artifacts
+dist/
+build/
+coverage/
+
+# Minified assets
+**/*.min.js
+**/*.min.css
+
+# Binary / media
+*.mp3
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+
+# Generated reports / logs
+*.log
+.DS_Store
