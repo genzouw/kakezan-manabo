@@ -1354,88 +1354,88 @@ h3 {
 }
 
 /* 段ごとのカラーコーディング */
-.level-checkbox[data-level='1'] {
+.level-checkbox[data-level="1"] {
   background: var(--color-dan-1);
   border-color: var(--color-dan-1-border);
 }
 
-.level-checkbox[data-level='1']:hover {
+.level-checkbox[data-level="1"]:hover {
   border-color: var(--color-dan-1-hover);
 }
 
-.level-checkbox[data-level='2'] {
+.level-checkbox[data-level="2"] {
   background: var(--color-dan-2);
   border-color: var(--color-dan-2-border);
 }
 
-.level-checkbox[data-level='2']:hover {
+.level-checkbox[data-level="2"]:hover {
   border-color: var(--color-dan-2-hover);
 }
 
-.level-checkbox[data-level='3'] {
+.level-checkbox[data-level="3"] {
   background: var(--color-dan-3);
   border-color: var(--color-dan-3-border);
 }
 
-.level-checkbox[data-level='3']:hover {
+.level-checkbox[data-level="3"]:hover {
   border-color: var(--color-dan-3-hover);
 }
 
-.level-checkbox[data-level='4'] {
+.level-checkbox[data-level="4"] {
   background: var(--color-dan-4);
   border-color: var(--color-dan-4-border);
 }
 
-.level-checkbox[data-level='4']:hover {
+.level-checkbox[data-level="4"]:hover {
   border-color: var(--color-dan-4-hover);
 }
 
-.level-checkbox[data-level='5'] {
+.level-checkbox[data-level="5"] {
   background: var(--color-dan-5);
   border-color: var(--color-dan-5-border);
 }
 
-.level-checkbox[data-level='5']:hover {
+.level-checkbox[data-level="5"]:hover {
   border-color: var(--color-dan-5-hover);
 }
 
-.level-checkbox[data-level='6'] {
+.level-checkbox[data-level="6"] {
   background: var(--color-dan-6);
   border-color: var(--color-dan-6-border);
 }
 
-.level-checkbox[data-level='6']:hover {
+.level-checkbox[data-level="6"]:hover {
   border-color: var(--color-dan-6-hover);
 }
 
-.level-checkbox[data-level='7'] {
+.level-checkbox[data-level="7"] {
   background: var(--color-dan-7);
   border-color: var(--color-dan-7-border);
 }
 
-.level-checkbox[data-level='7']:hover {
+.level-checkbox[data-level="7"]:hover {
   border-color: var(--color-dan-7-hover);
 }
 
-.level-checkbox[data-level='8'] {
+.level-checkbox[data-level="8"] {
   background: var(--color-dan-8);
   border-color: var(--color-dan-8-border);
 }
 
-.level-checkbox[data-level='8']:hover {
+.level-checkbox[data-level="8"]:hover {
   border-color: var(--color-dan-8-hover);
 }
 
-.level-checkbox[data-level='9'] {
+.level-checkbox[data-level="9"] {
   background: var(--color-dan-9);
   border-color: var(--color-dan-9-border);
 }
 
-.level-checkbox[data-level='9']:hover {
+.level-checkbox[data-level="9"]:hover {
   border-color: var(--color-dan-9-hover);
 }
 
-.level-checkbox input[type='checkbox'] {
+.level-checkbox input[type="checkbox"] {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -1446,12 +1446,12 @@ h3 {
   accent-color: var(--color-brand-primary);
 }
 
-.level-checkbox input[type='checkbox']:checked ~ .level-icon {
+.level-checkbox input[type="checkbox"]:checked ~ .level-icon {
   transform: scale(1.1);
   filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.3));
 }
 
-.level-checkbox input[type='checkbox']:checked ~ .level-text {
+.level-checkbox input[type="checkbox"]:checked ~ .level-text {
   font-weight: 700;
   color: var(--color-brand-primary);
 }
@@ -1523,7 +1523,12 @@ h3 {
     padding: 10px 8px;
   }
 
-  .level-checkbox span {
+  .level-icon {
+    font-size: 2em;
+    margin-bottom: 6px;
+  }
+
+  .level-text {
     font-size: 1em;
   }
 }
