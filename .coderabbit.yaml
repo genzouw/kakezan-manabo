@@ -37,29 +37,18 @@ reviews:
       - main
 
   path_instructions:
-    - path: 'backend/src/**/*.ts'
+    - path: 'js/**/*.js'
       instructions: |
-        Hono + Better Auth + Drizzle 構成のサーバサイドコードとしてレビューしてください:
-        - 認可チェック (requireOperator / requireTenant 等のミドルウェア適用漏れ) が無いか。
-        - DB クエリでテナント境界 (tenant_id) の絞り込みが抜けていないか。
-        - 外部入力 (HTTP body / query / webhook payload) が zod 等で検証されているか。
-    - path: 'frontend/src/**/*.{ts,tsx}'
-      instructions: |
-        React + Vite + better-auth/react のクライアントコードとしてレビューしてください:
-        - 認証状態に依存する画面遷移・データ取得が SSR/CSR 境界で正しく扱われているか。
-        - 認証/権限が必要な API 呼び出しで credentials の送信が漏れていないか。
-        - ユーザー入力をそのまま innerHTML / dangerouslySetInnerHTML 等に流していないか。
+        ブラウザ上で動作する vanilla JavaScript (ES modules) のクライアントコードとしてレビューしてください:
+        - ユーザー入力をそのまま innerHTML 等に流していないか (XSS 観点)。
+        - イベントリスナのリーク (重複登録 / 解除漏れ) が無いか。
+        - DOM 操作が描画パフォーマンスを著しく落としていないか。
     - path: '.github/workflows/**'
       instructions: |
         GitHub Actions ワークフローとしてレビューしてください:
         - シークレットの露出 (echo / set-output 経由のリーク) が無いか。
         - 外部 action は SHA pin されているか。
         - permissions: が最小権限になっているか。
-    - path: 'db/migrations/**'
-      instructions: |
-        Drizzle のマイグレーション SQL です。以下を必ず確認してください:
-        - 既存行に対して破壊的 (DROP COLUMN / NOT NULL 追加 / 型変更) になっていないか、なるなら backfill / default 設定が整合しているか。
-        - インデックス追加が大規模テーブルでロックを引き起こさないか (CONCURRENTLY の検討)。
 
   # 生成物 / 依存物 / ロックファイルなどはレビュー対象から除外する。
   path_filters:
