@@ -10,12 +10,23 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: pr-conflict-notify-${{ github.ref }}
+  cancel-in-progress: true
+
+# 既定は読み取り権限のみ。コメント書き込みが必要なジョブに限定して
+# issues: write を付与し、最小権限原則を維持する。
 permissions:
   contents: read
-  pull-requests: write
+  pull-requests: read
 
 jobs:
   check-conflicts:
+    # PR コメントは Issues API (createComment/updateComment/deleteComment) で
+    # 行うため、pull-requests: write ではなく issues: write を付与する。
+    permissions:
+      pull-requests: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Check PR conflicts and notify authors
