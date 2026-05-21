@@ -23,7 +23,13 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/**', 'dist/**', 'build/**', 'coverage/**'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'build/**',
+      'coverage/**',
+      'commitlint.config.cjs',
+    ],
   },
   // Prettier との競合ルールを無効化（必ず配列の最後に置く）
   prettierConfig,
