@@ -90,7 +90,7 @@ npm run lint:fix
 ```
 
 PR を出す前に `npm run format` と `npm run lint:fix` を実行することを推奨します。
-CI の format check で違反が見つかった場合はマージできません。
+現在 CI の format check は警告のみですが、全ファイル整形完了後（Issue `#36` PR-2）に厳格化され、違反があるとマージできなくなります。
 
 ## ライセンス
 
