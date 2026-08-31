@@ -23,7 +23,7 @@
 `.github/workflows/deploy.yml` が利用する AWS (S3 / CloudFront / OIDC 経由の `secrets.AWS_ROLE_ARN` 等) のように、リポジトリオーナー (@genzouw) が既存インフラとして自己負担で運用しているものは本ポリシーの対象外とし、既存のまま維持できます。
 既存インフラを拡張・変更する場合や、新たに従量課金の可能性がある構成を追加する場合は、通常どおり本ポリシーの対象となります。
 
-### 1.1 MUST NOT — これらを含む PR は問答無用でクローズされます
+### 1.1 MUST NOT — これらを含む PR はレビューで差し戻し・クローズされます
 
 - **MUST NOT**: LLM プロバイダの API キー / トークンを GitHub Secrets に登録し、CI ワークフロー / GitHub Action から呼び出す構成の追加。
   - 該当する API キー例 (これらに限らない):
