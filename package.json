@@ -4,6 +4,9 @@
   "description": "掛け算学習アプリ - 子供向けインタラクティブ掛け算練習ツール",
   "main": "js/main.js",
   "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "start": "http-server -p 8000 -c-1 -o",
     "dev": "http-server -p 8000 -c-1",
