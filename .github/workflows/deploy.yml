@@ -5,8 +5,11 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
-  id-token: write
   contents: read
 
 env:
@@ -19,41 +22,66 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write # OIDC で AWS ロールを引き受けるために必要
+      contents: read
+
+    # 本リポジトリは公開されているため、本番デプロイは GitHub Environment 経由に
+    # 限定している。この宣言があると OIDC トークンの subject が
+    #
+    #   repo:genzouw/kakezan-manabo:environment:production
+    #
+    # となり、AWS 側の信頼ポリシーがこの形だけを許可している。environment を
+    # 宣言しないワークフローや main 以外のブランチからのワークフローは、
+    # デプロイ用ロールを引き受けられない (production 環境のデプロイ可能ブランチを
+    # main に限定しているため)。
+    environment: production
+
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
 
+      # 配信するものだけを集める。
+      #
+      # 以前はリポジトリ全体を sync し、CI 設定などを --exclude で落としていたが、
+      # 除外の書き忘れがそのまま公開に直結する (拒否リストの失敗モード)。実際に
+      # .prettierrc や .husky/ が配信されていた。配信するファイルを明示して集める
+      # 方式なら、新しく増えたファイルは既定で公開されない。
+      - name: Collect publishable files
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cp index.html style.css correct.mp3 incorrect.mp3 dist/
+          cp -R js dist/
+
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@cbe3b392738ccf3f987d68400dafcf4b0624a56c # v6.2.4
+        uses: aws-actions/configure-aws-credentials@517a711dbcd0e402f90c77e7e2f81e849156e31d # v6.2.2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      # dist/ に無いものは S3 からも消える (--delete)。過去に誤って公開された
+      # ファイルもこれで取り除かれる。
+      #
+      # HTML だけは別扱いにしたいので、1 回目は --exclude "*.html" で長期キャッシュ、
+      # 2 回目に HTML をキャッシュ無しで上げる。--exclude した対象は --delete の
+      # 判定からも外れるため、1 回目で HTML が消えることはない。
       - name: Deploy to S3
         run: |
-          # Static assets with long cache
-          aws s3 sync . "s3://${S3_BUCKET}/${S3_PREFIX}/" \
+          aws s3 sync dist/ "s3://${S3_BUCKET}/${S3_PREFIX}/" \
             --delete \
             --cache-control "max-age=31536000,public" \
-            --exclude ".git/*" \
-            --exclude ".github/*" \
-            --exclude ".gitignore" \
-            --exclude "node_modules/*" \
-            --exclude "package*.json" \
-            --exclude "eslint.config.js" \
-            --exclude "*.md" \
-            --exclude ".serena/*" \
-            --exclude ".DS_Store" \
             --exclude "*.html"
 
-          # HTML files with no cache
-          aws s3 sync . "s3://${S3_BUCKET}/${S3_PREFIX}/" \
+          aws s3 sync dist/ "s3://${S3_BUCKET}/${S3_PREFIX}/" \
             --cache-control "max-age=0,no-cache,no-store,must-revalidate" \
             --exclude "*" \
             --include "*.html"
 
+      # 配信元の S3 バケットと CloudFront distribution は他のサブドメインと共有して
+      # いるため、自分のプレフィックス配下だけを対象にする。
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
