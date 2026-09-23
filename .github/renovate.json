@@ -32,7 +32,8 @@
       "description": "GitHub Actions の更新のプレフィックスとラベル (Dependabot の commit-message.prefix と同じ)",
       "matchManagers": ["github-actions"],
       "semanticCommitType": "ci",
-      "addLabels": ["github-actions"]
+      "addLabels": ["github-actions"],
+      "prConcurrentLimit": 5
     },
     {
       "description": "npm / bun の更新には npm ラベルを付ける",
