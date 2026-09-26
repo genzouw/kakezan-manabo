@@ -6,6 +6,7 @@ name: fallow
 # PR が変更した TS/JS ファイルに「新たに持ち込まれた」未使用コード・循環依存・
 # 重複・複雑度の悪化だけを検出する (既存の負債では落ちない)。
 # audit は base との差分を前提にするため pull_request でのみ動かす。
+# 将来の必須チェック化に備えて paths フィルタは付けない (JS 変更 0 件なら空の audit で pass する)。
 on:
   pull_request:
     branches: [main, master]
