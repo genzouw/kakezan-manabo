@@ -12,11 +12,10 @@
   "reviewers": ["genzouw"],
   "vulnerabilityAlerts": {
     "description": [
-      "脆弱性修正は minimumReleaseAge と schedule の対象外にして即時 PR にする。",
+      "脆弱性修正は minimumReleaseAge の対象外にして即時 PR にする。",
       "Dependabot の cooldown が security updates に効かなかったのと同じ挙動を保つため。"
     ],
     "minimumReleaseAge": null,
-    "schedule": [],
     "addLabels": ["security"]
   },
   "packageRules": [
