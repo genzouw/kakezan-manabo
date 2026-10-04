@@ -23,7 +23,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          # devDependencies の engines 交差点に合わせる。
+          # CI は 22 系の最新パッチに追従する（Renovate が更新する）。
+          # 最低要件は package.json の engines（>=22.13.0）。
           # @commitlint/* が >=22.12.0、ESLint v10 が ^20.19.0 || ^22.13.0 || >=24 の
           # ため、22 系で両方を満たす下限は 22.13。
           node-version: '22.23'
