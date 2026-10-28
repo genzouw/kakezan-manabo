@@ -25,10 +25,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          # CI は 24 系の最新マイナーに追従する（Renovate が更新する）。
-          # 最低要件は package.json の engines（>=24.0.0）。
-          # @commitlint/* が >=22.12.0、ESLint v10 が ^20.19.0 || ^22.13.0 || >=24 の
-          # ため、24 系はどのバージョンでも両方を満たす。
+          # CI は最新の安定版（26 系）に追従する（Renovate が更新する）。
+          # 最低要件は package.json の engines（>=24.0.0）で、24 系は CI では検証していない。
+          # @commitlint/* が >=22.12.0、ESLint v10 が ^20.19.0 || ^22.13.0 || >=24 を要求するが、
+          # 26 系はどちらも満たす。
           node-version: '26.12'
           cache: 'npm'
 
